@@ -1,0 +1,156 @@
+:root{
+    --blue:#3338b6;
+    --white:#ffffff;
+    --black:#252933;
+    --grey1:#c5c8ce;
+    --grey2:#c2c5cc;
+
+}
+.mncont1{
+    overflow:hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 100vh;
+}
+
+.mncont2{
+    width: 50%;
+    height: 100%;
+    background-color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mncont3{
+    width: 50%;
+    height: 100%;
+    background-color: var(--blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.loginformchild{
+    width: 50%;
+}
+.logo{
+    margin-bottom:2.5rem;
+}
+.logo span{
+    font-size: 2rem;
+    color: var(--black);
+    font-weight: 500;
+}
+
+.login{
+    font-weight: bolder;
+    font-size: 2.8rem;
+    margin-bottom: .5rem;
+}
+.wback{
+    color: var(--grey2);
+    margin-bottom: .5rem;
+}
+.form{
+    margin-top: 2rem;
+}
+.formcomp{
+    margin-bottom: 1rem;
+}
+.lbl{
+    font-weight: 500;
+    margin-left: .1rem;
+}
+.inp{
+    width: 100%;
+    margin-top: .5rem;
+    padding: .5rem .5rem;
+    outline: none;
+    border: 1px solid var(--grey1);
+    border-radius: .4rem;
+}
+.rembermecon{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: .8rem 0rem;
+}
+.rembermecon p{
+    color:var(--blue);
+    font-weight: 600;
+    font-size: .9rem;
+}
+
+.rem{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.rem span{
+    font-size: .9rem;
+}
+
+.signin{
+ margin: .5rem 0;
+}
+.signbtn1{
+    background-color: #3338b6;
+    width: 100%;
+    padding: .5rem ;
+    color:var(--white);
+    border-radius: .5rem;
+    font-size: 1.1rem;
+    margin-bottom: .5rem;
+
+}
+
+.signbtn2{
+    background-color: var(--white);
+    width: 100%;
+    padding: .5rem ;
+    color:var(--black);
+    border-radius: .5rem;
+    font-size: 1rem;
+    margin-bottom: .5rem;
+    border: 1px solid var(--grey1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.signbtn2 img{
+    height: 20px;
+    width: 20px;
+    margin-right: .5rem;
+}
+
+.signup{
+    margin: 2rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.dh{
+    font-size: .9rem;
+    color: var(--black);
+}
+.sup{
+    font-size: .9rem;
+    color: var(--blue);
+    font-weight: bold;
+    margin-left: .2rem;
+    cursor: pointer;
+}
+.sliderparent{
+    width: 60%;
+    overflow: hidden;
+}
+
+.ind{
+    background-color: #252933;
+    height: 30px;
+    width: 30px;
+    border-radius: 15px;
+}

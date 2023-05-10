@@ -1,0 +1,131 @@
+:root{
+    --black:#090909;
+    --white:#FFFFFF;
+    --blue:#2196f3;
+    --grey:#C8C8C8;
+    --lightgrey:#DCDBDB;
+}
+.chatparent{
+    background-color:var(--white);
+    border-radius: .6rem;
+    height: 90vh;
+    width: 98vw;
+    margin: 0rem 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: row;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px;
+}
+
+.chatcontainer1{
+height: 100%;
+width: 25%;
+overflow: hidden;
+border-right: 1px solid var(--lightgrey);
+}
+.chatcontainer2{
+    height: 100%;
+    width: 75%;
+    overflow: hidden;
+}
+.chatbox{
+    height:100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+}
+.topbarchat{
+    padding: .7rem 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--lightgrey);
+}
+.searchips{
+    padding: 1rem 2rem;
+}
+.inpbox{
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    padding: .5rem .8rem;
+    border-radius: .4rem;
+    border: 1px solid var(--grey);
+}
+.inpbox input{
+    outline: none;
+    width: 85%;
+    padding: .4rem 0rem;
+    color: var(--black);
+}
+.btns{
+    width: 15%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.chats{
+    height: 90%;
+    padding: 1rem 1.5rem;
+    overflow-y: scroll;
+}
+.outgoing{
+    display: flex;
+    margin: 1rem 0rem;
+    display: flex;
+    justify-content: flex-end;
+}
+.msgboxog{
+    background-color: var(--blue);
+    padding: .5rem 1rem;
+    border-radius: .4rem ;
+    color: var(--black);
+    margin-left:.5rem;
+    width: 230px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.msgboxog p{
+    margin: .4rem 0rem;
+    font-size: 1rem;
+    color: var(--white);
+}
+.incomeparent{
+    margin: 1rem 0rem;
+  
+    display: flex;
+    flex-direction: row;
+}
+.inmess{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.msgboxic{
+    background-color: var(--lightgrey);
+    padding: .5rem 1rem;
+    border-radius: .4rem ;
+    color: var(--black);
+    margin-left:.5rem;
+    width: 230px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.msgboxic p{
+    margin: .4rem 0rem;
+    font-size: 1rem;
+}
+.time{
+    display: flex;
+    justify-content: flex-end;
+    margin: .2rem .2rem;
+}
+.time span{
+    font-size: .8rem;
+}
