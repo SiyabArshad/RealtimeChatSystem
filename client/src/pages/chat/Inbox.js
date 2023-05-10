@@ -11,8 +11,9 @@ import { useParams } from "react-router-dom";
 import http from "../../utils/http.js"
 import axios from "axios"
 import Loading from '../../components/Loading';
+import io from 'socket.io-client';
+let socket=io('http://localhost:5000');
 export default function Inbox({userinfo,user}) {
-  
   const chatsRef = useRef(null);
   const params=useParams()
   const [inputFocused, setInputFocused] = useState(false);
@@ -41,7 +42,7 @@ const sendmessage=async()=>{
           from:"+5213314498458" 
         }
         const res=await http.post('/chat/conversations',messagedata);
-        setMessages(prev=>[...prev,res.data])
+        // setMessages(prev=>[...prev,res.data])
       } catch (error) {
         console.log(error);
         if (error.response && error.response.status === 400) {
@@ -79,14 +80,21 @@ const getallcons=async()=>{
 }
 useEffect(()=>{
   getallcons()
+  socket.connect()
+  socket.emit("joinChatRoom",{roomid:`chat_${userinfo?.contactid}`})
+  socket.on('messageevent',(payload)=>{
+    console.log(payload)
+    setMessages(prev=>[...prev,payload])
+  })
 },[params.id])
-useEffect(() => {
-  const chatsDiv = chatsRef.current;
-  chatsDiv.addEventListener('scroll', handleScroll);
-  return () => {
-    chatsDiv.removeEventListener('scroll', handleScroll);
-  };
-}, []);
+
+// useEffect(() => {
+//   const chatsDiv = chatsRef.current;
+//   chatsDiv.addEventListener('scroll', handleScroll);
+//   return () => {
+//     chatsDiv.removeEventListener('scroll', handleScroll);
+//   };
+// }, []);
 return (
     <div className='chatbox'>
       <Loading loading={loading}/>

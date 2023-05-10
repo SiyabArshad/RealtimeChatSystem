@@ -44,6 +44,7 @@ export default function CreateContact({user}) {
         setloading(true)
         try {
          const { data } = await http.post('/chat/contact', userDetails);
+         console.log(data)
           toast.success('Contact Added SuccessFully', {
             position: "top-right",
             autoClose: 5000,

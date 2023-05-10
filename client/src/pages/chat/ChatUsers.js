@@ -7,6 +7,7 @@ import "./styles.css"
 import Users from "./Users";
 import http from '../../utils/http';
 import { useParams } from "react-router-dom";
+import Loading from '../../components/Loading';
 const useStyles = makeStyles({
     root: {
       '& .MuiOutlinedInput-root': {
@@ -16,6 +17,7 @@ const useStyles = makeStyles({
     },
   });
 export default function ChatUsers({calluser}) {
+  const [loading,setloading]=React.useState(false)
       const classes = useStyles();
       const [search,setsearch]=React.useState("")
       const [lastconvs,setlastconvs]=React.useState([])
@@ -30,15 +32,26 @@ export default function ChatUsers({calluser}) {
         }
       };
       const params=useParams()
- 
+      const getallcons=async()=>{
+        setloading(true)
+        try{
+          http.get(`http://localhost:5000/api/chat/lastconversations`).then((res) => {
+            setList(res.data);
+            setlastconvs(res.data)        
+        });
+        }
+        catch{
+        }
+        finally{
+          setloading(false)
+        }
+      }
     React.useEffect(() => {
-    http.get(`http://localhost:5000/api/chat/lastconversations`).then((res) => {
-          setList(res.data);
-          setlastconvs(res.data)        
-      });
+   getallcons()
     }, [params.id]);
   return (
     <div>
+        <Loading loading={loading}/>
         <FormControl sx={{ width: '100%'}}>
                 <TextField size="medium" 
                  variant="outlined"

@@ -7,6 +7,7 @@ import Navbar from './components/navbar/Navbar';
 import Routing from './routing/Routing';
 import setAuthToken from './utils/setAuthToken';
 import Drawer from './components/Drawer/Drawer';
+
 const App = () => {
   const [user, setUser] = useState(undefined);
   useEffect(() => {

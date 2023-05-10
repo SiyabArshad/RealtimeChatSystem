@@ -49,6 +49,8 @@ router.post("/conversations", async (req,res) =>{
         from: from,
         contact_id:contact_id,
       });
+      const events=req.app.get("eventEmitter")
+      events.emit("sendmessage",message_create)
       res.send(message_create);
 });
 // endpoint to get last 20 conversation with page  // param is page
@@ -130,10 +132,25 @@ router.get("/verify", async (req,res) =>{
 });
 
 router.post("/receive-message", async (req,res) =>{
-  const { id,text } = req.body;
-        //id is phone linked to contact;
+  const { id,text,user,contact_id,clientID } = req.body;
+  //you can add these messages to datab base 
+  const receivemessage = {
+    msgType: 'inbound',
+    text: text,
+    clientID: clientID,
+    user: user,
+    from: id,
+    name: null,
+    unread: '0',
+    contact_id: contact_id,
+    time: new Date(),
+  };
+  //do some database stuff here you can store it to db
+  const events=req.app.get("eventEmitter")
+  events.emit("receivemessage",receivemessage)
+  //id is phone linked to contact;
         //according to this phone number you have the contact and so the user
-   res.json(req.body)   
+   res.json(receivemessage)   
 });
 
 router.get("/contact/:id",async(req,res)=>{
