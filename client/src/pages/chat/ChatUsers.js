@@ -17,7 +17,7 @@ const useStyles = makeStyles({
     },
   });
 export default function ChatUsers({calluser}) {
-  const [loading,setloading]=React.useState(false)
+      const [loading,setloading]=React.useState(false)
       const classes = useStyles();
       const [search,setsearch]=React.useState("")
       const [lastconvs,setlastconvs]=React.useState([])
@@ -48,7 +48,7 @@ export default function ChatUsers({calluser}) {
       }
     React.useEffect(() => {
    getallcons()
-    }, [params.id]);
+    }, []);
   return (
     <div>
         <Loading loading={loading}/>

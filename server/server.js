@@ -29,26 +29,57 @@ app.use('/api/auth', authRoutes);
 app.use('/api/chat', chatRoutes);
 app.use('/api/settings', settingsRoutes);
 app.set("eventEmitter",EventEmitter)
-io.on('connection', function(socket){
-  console.log("Connected User",socket.id) 
-  socket.on("joinChatRoom",(payload)=>{
-    socket.join(payload?.roomid)
-    })
-  socket.on('disconnect', function() {
-      console.log("client disconnected")
+
+const userRooms = new Map();
+
+io.on('connection', function(socket) {
+  console.log("Connected User", socket.id);
+
+  socket.on("joinChatRoom", (payload) => {
+    const { roomid } = payload;
+
+    // Check if the user has already joined the room
+    if (!userRooms.has(socket.id)) {
+      // Join the room and store the association
+      socket.join(roomid);
+      userRooms.set(socket.id, roomid);
+    }
   });
 
-});
+  socket.on("joinBroadCastRoom", (payload) => {
+    const { roomid } = payload;
 
+    // Check if the user has already joined the room
+    if (!userRooms.has(socket.id)) {
+      // Join the room and store the association
+      socket.join(roomid);
+      userRooms.set(socket.id, roomid);
+    }
+  });
+
+  socket.on('disconnect', function() {
+    console.log("client disconnected");
+    
+    // Remove the user-room association when the client disconnects
+    if (userRooms.has(socket.id)) {
+      const roomid = userRooms.get(socket.id);
+      socket.leave(roomid);
+      userRooms.delete(socket.id);
+    }
+  });
+});
 http.listen(PORT, () => {
   console.log(`Server is running on PORT: ${PORT}`);
 });
 
 EventEmitter.on("receivemessage",(payload)=>{
-  console.log(payload.contact_id)
   io.to(`chat_${payload.contact_id}`).emit("messageevent",payload)
 })
 
 EventEmitter.on("sendmessage",(payload)=>{
   io.to(`chat_${payload.contact_id}`).emit("messageevent",payload)
+})
+
+EventEmitter.on("sendmessagebroadcast",(payload)=>{
+  io.to(`broadcast_${payload.clientID}`).emit("broadcastmessageevent",payload)
 })

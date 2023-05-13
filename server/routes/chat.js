@@ -3,14 +3,13 @@ const router = express.Router();
 const auth = require('../middleware/auth');
 const Message = require('../models/msgModel');
 const Contact = require('../models/contactModel');
+
 let clientID=''
 let contact_id=''
 router.get('/', auth, async (req, res) => {
   res.json({message:"Funciona Chingado"})
 });
 
-// starts parts of endpoints for get data from CRM
-// endpoint to get las 20 conversacion of a contact / lead -- Parameters es lead/ contacts  y el id
 router.get("/conversations", async (req,res) =>{
   clientID = req.headers.clientid;
   const { contact_id } = req.query||req.body;
@@ -18,7 +17,6 @@ router.get("/conversations", async (req,res) =>{
       const message_read = await Message.find({ clientID: clientID,contact_id:contact_id}).limit(30)
       res.send(message_read);
 });
-
 
 router.get("/allconversations", async (req,res) =>{
   clientID = req.headers.clientid;
@@ -164,3 +162,61 @@ router.get("/contact/:id",async(req,res)=>{
 
 })
 module.exports = router;
+
+//broadcasting messages
+router.post("/broadcast", async (req, res) => {
+  const clientID = req.headers.clientid;
+  const { user, text, from, msgType } = req.body;
+
+  const messageType = {
+    msgType: msgType,
+    text: text,
+    clientID: clientID,
+    user: user,
+    from: from,
+    time: new Date(),
+  };
+
+  try {
+    const allContacts = await Contact.find({ clientID: clientID }).lean();
+
+    if (allContacts.length > 0) {
+      const messagePromises = allContacts.map(async (item) => {
+        const contactId = item._id.toHexString();
+        const message = {
+          msgType: msgType,
+          text: text,
+          clientID: clientID,
+          user: user,
+          from: from,
+          contact_id: contactId,
+        };
+        const createdMessage = await Message.create(message);
+        return createdMessage;
+      });
+
+      const createdMessages = await Promise.all(messagePromises);
+
+      const events = req.app.get("eventEmitter");
+      events.emit("sendmessagebroadcast", messageType);
+
+      res.status(200).json({
+        success: true,
+        message: "Broadcast sent successfully",
+        messageType: messageType,
+        createdMessages: createdMessages,
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: "No contacts found for the client",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "An error occurred while processing the request",
+      error: error.message,
+    });
+  }
+});

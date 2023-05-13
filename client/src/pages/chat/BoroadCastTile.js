@@ -22,46 +22,28 @@ import { useNavigate, useLocation } from "react-router-dom";
 import http from "../../utils/http.js"
 import formatDate from '../../utils/formateddatetime';
 import { useParams } from 'react-router-dom';
-export default function ContactTile({calluser,item}) {
-    let navigate = useNavigate();
-    const params=useParams()
-	const openChat = (id,item) => {
-    calluser(item)
-		navigate(`/chat/${id}`)
-	}
-    const [contactonfo,setcontactinfo]=React.useState()
-    const getallcons=async()=>{
-          const res2=await http.get(`http://localhost:5000/api/chat/contact/${item?.contactid}`)
-          setcontactinfo(res2?.data)
- 
-      }
-    React.useEffect(()=>{
-        getallcons()
-      },[])
+export default function BroadCastTile({bcast}) {
   return (
     <>
-    <ListItemButton onClick={()=>{
-    openChat(item?.id,item)
-    }
-    }>
+    <ListItemButton 
+    onClick={()=>bcast(true)}
+    >
       <ListItem disablePadding={true}>
         <ListItemAvatar>
           <Avatar>
-            {
-               contactonfo?.first_name!==null&&contactonfo?.first_name[0].toUpperCase()
-            }
+            B
             </Avatar>
         </ListItemAvatar>
         <ListItemText
           sx={{}}
-          primary={contactonfo?.first_name}
+          primary={"BroadCast"}
           secondary={
             <React.Fragment>
-              {item?.text}
+              {"Send to all Contacts"}
             </React.Fragment>
           }
         />
-        <Typography variant='caption'>{formatDate(item?.time)}</Typography>
+        {/* <Typography variant='caption'>{formatDate(item?.time)}</Typography> */}
       </ListItem>
     </ListItemButton>
     <Divider/>

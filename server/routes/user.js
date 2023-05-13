@@ -10,6 +10,12 @@ router.get('/', auth, async (req, res) => {
   const profile = await User.findById(req.user._id);
   res.send(profile);
 });
+router.get('/companyinfo', async (req, res) => {
+  // console.log(req.headers.clientid)
+  clientID = req.headers.clientid;
+  const companyprofile = await Company.findOne({clientID:clientID});
+  res.send(companyprofile);
+});
 
 router.get('/allusers', async (req, res) => {
   const profile = await User.find({role:"admin"}).limit(30)
@@ -45,7 +51,7 @@ router.post('/', async (req, res) => {
   await user.save();
 
   // Save Company into Database
-  company = new Company({clientID,admin:user._id})
+  const company = new Company({clientID,admin:user._id})
   await company.save();
 
   // Generate Token
