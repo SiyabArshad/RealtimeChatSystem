@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Paper } from '@mui/material'
+import { Grid, Paper, Typography,Button } from '@mui/material'
 import { useStyles } from "./Ressources";
 import "./styles.css"
 import ChatUsers from './ChatUsers'
@@ -12,58 +12,46 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import ContactsIcon from '@mui/icons-material/Contacts';
 import http from '../../utils/http';
-
-import Binbox from './Binbox';
+import Useriameg from "../../assets/images/user2.jpg"
+import PhoneEnabledIcon from '@mui/icons-material/PhoneEnabled';
 const Chat = ({user}) => {
-	const classes = useStyles();
 	const [selecteduser,setselecteduser]=React.useState(null)
-	// const [broadcast,setbroadcast]=React.useState(false)
-	const [value, setValue] = React.useState(0);
-	const [confidentiality,setconfidentiality]=React.useState("indivisual")
-	const getdata=async()=>{
-		console.log("call")
-		const {data}=await http.get(`http://localhost:5000/api/user/companyinfo`)
-		setconfidentiality(data?.confidentiality)
-
-	}
+	const [profile,setprofile]=React.useState(null)
 	const callbackuser=(state)=>{
 		setselecteduser(state)
 		}
-	// const broadcastcallback=(state)=>{
-	// 	setbroadcast(state)
-	// }
-	React.useEffect(()=>{
-		getdata()
-	},[])
+	const getprof=(state)=>{
+		setprofile(state)
+	}	
 	return (
 			<div className='chatparent'>
 					<div className='chatcontainer1'>
-						<ChatUsers calluser={callbackuser}
-						//  bcast={broadcastcallback}
-						
-						/>
+						<ChatUsers getprof={getprof} calluser={callbackuser}/>
 					</div>
-					<div className='chatcontainer2'>
-					{/* {selecteduser!==null&&broadcast===false?<Inbox cdt={confidentiality} user={user} userinfo={selecteduser}/>:<Binbox user={user}/>} */}
-					<Inbox cdt={confidentiality} user={user} userinfo={selecteduser}/>
-					</div>
+					{
+						selecteduser&&<div className='chatcontainer2'>
+						<Inbox getprof={getprof} user={user} userinfo={selecteduser}/>
+						</div>
+					}
+					{
+						selecteduser&&<div className='chatcontainer3'>
+						<div className='biodata'>
+								<img  className='dp' src={Useriameg}/>
+								<Typography sx={{marginTop:1,fontSize:15}}>{`${profile?.first_name?profile?.first_name:"First Name"} ${profile?.last_name?profile?.last_name:"Last Name"}`}</Typography>
+								<div className='nmbr'>
+									<PhoneEnabledIcon sx={{height:15,width:15}}/>
+								<Typography sx={{marginLeft:1,fontSize:15}}>+ {profile?.phone?profile?.phone:"99999999"}</Typography>
+								</div>
+								<div className='childcon1'>
+									<Button disableElevation={true}  sx={{bgcolor:"#2196f3",textTransform:"capitalize",marginBottom:1}} variant='contained'>Open in Crm</Button>
+									<Button disableElevation={true} sx={{bgcolor:"rgba(33, 150, 243,0.3)",color:"#2196f3",textTransform:"capitalize"}} variant='contained'>Tranfer to Other Agent</Button>
+								</div>
+						</div>
+				</div>
+					}
 			</div>
 			
 	)
 }
 
 export default Chat 
-/*
-			<Box>
-      <BottomNavigation
-        showLabels
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-	    }}
-      >
-        <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
-        <BottomNavigationAction label="Contacts" icon={<ContactsIcon/>} />
-       </BottomNavigation>
-    </Box>
-*/

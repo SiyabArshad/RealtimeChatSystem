@@ -19,13 +19,46 @@
 
 .chatcontainer1{
 height: 100%;
-width: 25%;
+width: 20%;
 overflow: hidden;
 border-right: 1px solid var(--lightgrey);
 }
+.chatcontainer3{
+    height: 100%;
+    width: 15%;
+    overflow: hidden;
+    border-left: 1px solid var(--lightgrey);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    }
+    .biodata{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+.dp{
+    height: 70px;
+    width: 70px;
+    border-radius: 35px;
+    object-fit: cover;
+}
+.nmbr{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: .5rem 0rem;
+}
+.childcon1{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 .chatcontainer2{
     height: 100%;
-    width: 75%;
+    width: 65%;
     overflow: hidden;
 }
 .chatbox{

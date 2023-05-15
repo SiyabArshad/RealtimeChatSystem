@@ -16,7 +16,7 @@ const useStyles = makeStyles({
       },
     },
   });
-export default function ChatUsers({calluser}) {
+export default function ChatUsers({calluser,getprof}) {
       const [loading,setloading]=React.useState(false)
       const classes = useStyles();
       const [search,setsearch]=React.useState("")

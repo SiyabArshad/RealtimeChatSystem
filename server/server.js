@@ -30,44 +30,60 @@ app.use('/api/chat', chatRoutes);
 app.use('/api/settings', settingsRoutes);
 app.set("eventEmitter",EventEmitter)
 
-const userRooms = new Map();
 
-io.on('connection', function(socket) {
-  console.log("Connected User", socket.id);
-
-  socket.on("joinChatRoom", (payload) => {
-    const { roomid } = payload;
-
-    // Check if the user has already joined the room
-    if (!userRooms.has(socket.id)) {
-      // Join the room and store the association
-      socket.join(roomid);
-      userRooms.set(socket.id, roomid);
-    }
-  });
-
-  socket.on("joinBroadCastRoom", (payload) => {
-    const { roomid } = payload;
-
-    // Check if the user has already joined the room
-    if (!userRooms.has(socket.id)) {
-      // Join the room and store the association
-      socket.join(roomid);
-      userRooms.set(socket.id, roomid);
-    }
-  });
-
+io.on('connection', function(socket){
+  console.log("Connected User",socket.id) 
+  socket.on("joinChatRoom",(payload)=>{
+    socket.join(payload.roomid)
+    console.log(`Joined Private room ${payload.roomid} by`,socket.id)
+    })
+    socket.on("joinBroadCastRoom",(payload)=>{
+      socket.join(payload.roomid)
+      console.log(`Joined BroadCast room ${payload.roomid} by`,socket.id)
+      })
   socket.on('disconnect', function() {
-    console.log("client disconnected");
-    
-    // Remove the user-room association when the client disconnects
-    if (userRooms.has(socket.id)) {
-      const roomid = userRooms.get(socket.id);
-      socket.leave(roomid);
-      userRooms.delete(socket.id);
-    }
+      console.log("client disconnected")
   });
+
 });
+// const userRooms = new Map();
+
+// io.on('connection', function(socket) {
+//   console.log("Connected User", socket.id);
+
+//   socket.on("joinChatRoom", (payload) => {
+//     const { roomid } = payload;
+
+//     // Check if the user has already joined the room
+//     if (!userRooms.has(socket.id)) {
+//       // Join the room and store the association
+//       socket.join(roomid);
+//       userRooms.set(socket.id, roomid);
+//     }
+//   });
+
+//   socket.on("joinBroadCastRoom", (payload) => {
+//     const { roomid } = payload;
+
+//     // Check if the user has already joined the room
+//     if (!userRooms.has(socket.id)) {
+//       // Join the room and store the association
+//       socket.join(roomid);
+//       userRooms.set(socket.id, roomid);
+//     }
+//   });
+
+//   socket.on('disconnect', function() {
+//     console.log("client disconnected");
+    
+//     // Remove the user-room association when the client disconnects
+//     if (userRooms.has(socket.id)) {
+//       const roomid = userRooms.get(socket.id);
+//       socket.leave(roomid);
+//       userRooms.delete(socket.id);
+//     }
+//   });
+// });
 http.listen(PORT, () => {
   console.log(`Server is running on PORT: ${PORT}`);
 });
