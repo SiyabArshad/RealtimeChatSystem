@@ -17,6 +17,15 @@ router.get('/companyinfo', async (req, res) => {
   res.send(companyprofile);
 });
 
+router.put('/companyinfo', async (req, res) => {
+  // console.log(req.headers.clientid)
+  const{confidentiality}=req.body
+  clientID = req.headers.clientid;
+  const companyprofile = await Company.findOne({clientID:clientID});
+  companyprofile.confidentiality=confidentiality;
+  const data=await companyprofile.save();
+  res.send(data);
+});
 router.get('/allusers', async (req, res) => {
   const profile = await User.find({role:"admin"}).limit(30)
   res.send(profile);

@@ -27,6 +27,7 @@ import { Avatar } from '@mui/material';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import CreateIcon from '@mui/icons-material/Create';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
 const drawerWidth = 240;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -100,6 +101,7 @@ export default function PersistentDrawerLeft({user}) {
           >
             <MenuIcon sx={{height:30,width:30}}/>
           </IconButton>
+
         </Toolbar>
 
       </AppBar>
@@ -157,6 +159,16 @@ export default function PersistentDrawerLeft({user}) {
                     <AddCircleIcon/>
                 </ListItemIcon>
                 <ListItemText primary={"Add Contact"} />
+              </ListItemButton>
+            </ListItem>
+            </NavLink>
+            <NavLink style={{textDecoration:"none",color:'inherit'}} to={"/settingspage"}>
+            <ListItem disablePadding={false}>
+              <ListItemButton>
+                <ListItemIcon>
+                    <SettingsSuggestIcon/>
+                </ListItemIcon>
+                <ListItemText primary={"Setting"} />
               </ListItemButton>
             </ListItem>
             </NavLink>

@@ -9,7 +9,9 @@ import Logout from '../pages/logout/Logout';
 import Home from '../pages/home/Home';
 import Settings from '../pages/settings/Settings';
 import CreateContact from "../pages/contact/CreateContact"
+import SettingPage from '../pages/settingPage/SettingPage';
 import PrivateRoute from './PrivateRoute';
+
 
 import Drawer from '../components/Drawer/Drawer';
 const Routing = ({ user }) => {
@@ -21,6 +23,7 @@ const Routing = ({ user }) => {
    <Route path="/chat" element={user?<Layout user={user}><Chat user={user}/></Layout>:<Login/>} />
    <Route path="/chat/:id" element={user?<Layout user={user}><Chat user={user}/></Layout>:<Login/>} />
    <Route path="/settings" element={user?<Layout user={user}> <Settings /> </Layout>:<Login/> } />
+   <Route path="/settingspage" element={user?<Layout user={user}> <SettingPage /> </Layout>:<Login/> } />
    <Route path="/logout" element={<Layout user={user}> <Logout /> </Layout>} />
    <Route path="/login" element={<Login/>} />
   <Route path="/register" element={<Register/>} />
