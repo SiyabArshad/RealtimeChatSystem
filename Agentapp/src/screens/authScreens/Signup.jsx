@@ -1,24 +1,14 @@
 import { View, Text,Modal,TouchableOpacity,Pressable,Image,StyleSheet,ImageBackground,ScrollView, Dimensions ,TextInput} from 'react-native'
 import React from 'react'
 import colors from "../../helpers/colors"
-import fonts from "../../helpers/fonts"
 import Screen from "../../components/Screen"
 import Heading from "../../components/Typography/Heading"
-import ButonText from "../../components/Typography/ButtonText"
 import CaptionText from "../../components/Typography/CaptionText"
-import LableText from "../../components/Typography/LableText"
 import SubtitleText from "../../components/Typography/Subtitle"
-import EntypoIcon from "react-native-vector-icons/Entypo"
 import Feather from "react-native-vector-icons/Feather"
-import MaterialIcon from "react-native-vector-icons/MaterialIcons"
 import { RFPercentage as rp, RFValue as rf } from "react-native-responsive-fontsize";
 import ButtonFilled from "../../components/buttons/ButtonFilled"
-import { DefaultTheme} from 'react-native-paper';
-import OutlinedTextInput from '../../components/Inputs/OutlinedTextInput'
-import PasswordInput from '../../components/Inputs/PasswordInput'
 import { CheckBox } from 'react-native-elements'
-import ScreenNames from '../../helpers/routes'
-import ButtonOutline from '../../components/buttons/ButtonOutline'
 export default function SignupScreen({navigation,route}) {
     const [email, setemail] = React.useState('');
     const [password,setpassword]=React.useState("")
@@ -60,7 +50,7 @@ export default function SignupScreen({navigation,route}) {
            checkedColor={colors.purple}
           
          />
-                <CaptionText color={colors.black} text={"Estoy de acuerdo con los terminos y condiciones"}/>
+                <CaptionText style={{textAlign:"center"}} color={colors.black} text={"Estoy de acuerdo con los terminos y condiciones"}/>
                 </View>
                 
               </View>
