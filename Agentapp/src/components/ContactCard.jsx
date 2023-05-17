@@ -21,7 +21,8 @@ export default function ContactCard() {
                             <Avatar rounded size="medium" source={require("../../assets/images/user.png")}/>
                             <View style={{marginLeft:rp(2)}}>
                                 <SubTitleText text={"Christin Arc"} color={colors.lightblack} size='m'/>
-                                <LabelText style={{marginTop:rp(1),fontSize:rp(1.8)}} color={colors.lightblack} text={`Customer`}/>
+                                <LabelText style={{marginTop:rp(1),fontSize:rp(1.8)}} color={colors.lightblack} text={`${"Last message Here is".slice(0,15)}....`}/>
+                          
                              </View>
                             </View>
                             <CaptionText text={"12:23 Pm"}/>

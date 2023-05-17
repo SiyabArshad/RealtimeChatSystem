@@ -8,6 +8,7 @@ import Loading from './src/components/Loading';
 import OnBoarding from "./src/screens/OnBoardingScreens/OnBoarding"
  import SignupScreen from './src/screens/authScreens/Signup';
  import SigninScreen from './src/screens/authScreens/SignIn';
+ import Inbox from './src/screens/chat/Inbox';
 import Messages from './src/screens/chat/Messages';
 export default function App() {
   LogBox.ignoreAllLogs()
@@ -27,7 +28,7 @@ export default function App() {
     return <Loading visible={true}/>
   }
   return (
-<Messages/>
+<Inbox/>
   );
 }
 
