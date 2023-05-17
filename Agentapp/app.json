@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "archnode",
-    "slug": "archnode",
+    "name": "ChatApp",
+    "slug": "chatappp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -26,12 +26,6 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "5d04680c-c24a-45c8-b2bb-635aaebca02f"
-      }
-    },
-    "owner": "siyab404"
+    }
   }
 }
