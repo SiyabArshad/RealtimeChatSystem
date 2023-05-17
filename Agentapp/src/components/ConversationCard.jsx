@@ -14,11 +14,14 @@ import Entypo from "react-native-vector-icons/Entypo"
 import LabelText from "./Typography/LableText"
 import { LinearProgress,Avatar } from 'react-native-elements'
 
-export default function ConversationCard() {
+export default function ConversationCard({func}) {
   return (
-    <Pressable style={{width:"95%",marginHorizontal:"2.5%",display:"flex",flexDirection:"row",justifyContent:"space-between",alignItems:"center",marginBottom:rp(2),backgroundColor:colors.lightgrey,paddingHorizontal:rp(1.5),paddingVertical:rp(2),borderRadius:rp(2.5)}}>
+    <Pressable onPress={func} style={{width:"95%",marginHorizontal:"2.5%",display:"flex",flexDirection:"row",justifyContent:"space-between",alignItems:"center",marginBottom:rp(2),backgroundColor:colors.lightgrey,paddingHorizontal:rp(1.5),paddingVertical:rp(2),borderRadius:rp(2.5)}}>
                             <View style={{display:"flex",flexDirection:"row",alignItems:"center"}}>
-                            <Avatar rounded size="medium" source={require("../../assets/images/user.png")}/>
+                         <View style={{height:40,width:40,borderRadius:20,display:"flex",justifyContent:"center",alignItems:"center",backgroundColor:colors.grey}}>
+                          <CaptionText text={"S"}/>
+                         </View>
+                            {/* <Avatar rounded size="medium" source={require("../../assets/images/user.png")}/> */}
                             <View style={{marginLeft:rp(2)}}>
                                 <SubTitleText text={"Christin Arc"} color={colors.lightblack} size='m'/>
                                 <LabelText style={{marginTop:rp(1),fontSize:rp(1.8)}} color={colors.lightblack} text={`${"Last message Here is".slice(0,15)}....`}/>

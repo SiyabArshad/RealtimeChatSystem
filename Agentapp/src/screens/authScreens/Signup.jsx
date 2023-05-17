@@ -9,18 +9,20 @@ import Feather from "react-native-vector-icons/Feather"
 import { RFPercentage as rp, RFValue as rf } from "react-native-responsive-fontsize";
 import ButtonFilled from "../../components/buttons/ButtonFilled"
 import { CheckBox } from 'react-native-elements'
+import ScreenNames from "../../helpers/routes"
 export default function SignupScreen({navigation,route}) {
     const [email, setemail] = React.useState('');
     const [password,setpassword]=React.useState("")
     const [remember, setremember] = React.useState(false);
     const LoginFunc=()=>{
+      navigation.navigate(ScreenNames.contactsscreen)
     }
  return (
 <Screen>
     <View style={{flex:1}}>
              <ScrollView showsVerticalScrollIndicator={false}>
              <View style={{display:"flex",flexDirection:"row",alignItems:"center",marginHorizontal:rp(2),marginTop:15}}>
-              <Pressable style={{backgroundColor:colors.purple,borderRadius:5}}>
+              <Pressable onPress={()=>navigation.pop()} style={{backgroundColor:colors.purple,borderRadius:5}}>
               <Feather name="chevron-left" size={28} color={colors.white}/>
               </Pressable>
             </View>
@@ -61,7 +63,7 @@ export default function SignupScreen({navigation,route}) {
         textTransform:"capitalize",fontSize:rp(2.2)}}/>
     
         <View style={{display:"flex",alignItems:"center",justifyContent:"center"}}>
-                <Pressable  style={{display:"flex",flexDirection:"row",justifyContent:"center"}}>
+                <Pressable onPress={()=>navigation.navigate(ScreenNames.loginScreen)}  style={{display:"flex",flexDirection:"row",justifyContent:"center"}}>
                     <SubtitleText size='s'  text={"¿Ya tienes una cuenta? "} color={colors.lightblack} style={{fontSize:rp(2.3),marginRight:rp(1)}}/>
                     <SubtitleText size='s'  text={"Log In"} color={colors.purple} style={{fontSize:rp(2.3)}}/>
                 </Pressable>

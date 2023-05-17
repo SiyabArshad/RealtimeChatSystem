@@ -18,7 +18,7 @@ export default function Inbox({navigation,route}) {
     <View style={{display:"flex",flexDirection:"row",justifyContent:"space-between",alignItems:"center",marginTop:rp(1)
 }}>
         <View style={{display:"flex",flexDirection:"row",alignItems:"center"}}>
-            <TouchableOpacity >
+            <TouchableOpacity  onPress={()=>navigation.pop()}>
             <Feather name="chevron-left" size={30} color={colors.lightblack} />
             </TouchableOpacity>
             <View style={{marginLeft:rp(2),display:"flex",flexDirection:"row",alignItems:"center"}}>

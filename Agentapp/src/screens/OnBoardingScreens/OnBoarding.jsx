@@ -25,7 +25,7 @@ export default function OnBoarding({navigation,route}) {
   <LableText text={"Log In"} color={colors.purple} style={{fontSize:rp(2.1)}}/> 
     </Pressable>
 </View>
-     <ButtonFilled  text={"Registrate con tu Email"} style={{marginBottom:rp(1.5)}} textstyle={{fontSize:rp(2.2),fontFamily:fonts.mmedium,textTransform:"capitalize"}}/>
+     <ButtonFilled func={()=>navigation.navigate(ScreenNames.signupScreen)}  text={"Registrate con tu Email"} style={{marginBottom:rp(1.5)}} textstyle={{fontSize:rp(2.2),fontFamily:fonts.mmedium,textTransform:"capitalize"}}/>
      <ButtonOutline text={"Registrate con Gmail"}  textstyle={{fontSize:rp(2.2),fontFamily:fonts.mmedium,textTransform:"capitalize"}}>
       <Image style={{height:20,width:20,marginRight:rp(2)}} source={require("../../../assets/images/google.png")}/>
       </ButtonOutline>

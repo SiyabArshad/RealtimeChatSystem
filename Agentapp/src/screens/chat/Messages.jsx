@@ -15,7 +15,8 @@ import LabelText from "../../components/Typography/LableText"
 import { LinearProgress,Avatar } from 'react-native-elements'
 import ConversationCard from '../../components/ConversationCard'
 import ContactCard from "../../components/ContactCard"
-export default function Messages() {
+import ScreenName from "../../helpers/routes"
+export default function Messages({navigation,route}) {
     const[tab,settab]=React.useState(0)
   return (
     <Screen>
@@ -35,7 +36,7 @@ export default function Messages() {
             <View>
             {
             [1,2,3,4,5,6,7,8,9,10,11].map((item,i)=>(
-                <ConversationCard key={i}/>
+                <ConversationCard func={()=>navigation.navigate(ScreenName.inbox)} key={i}/>
             ))
             }
             </View>
@@ -45,7 +46,7 @@ export default function Messages() {
             <View>
             {
             [1,2,3,4,5,6,7,8,9,10,11].map((item,i)=>(
-                <ContactCard key={i}/>
+                <ContactCard func={()=>navigation.navigate(ScreenName.inbox)} key={i}/>
             ))
             }
             </View>
