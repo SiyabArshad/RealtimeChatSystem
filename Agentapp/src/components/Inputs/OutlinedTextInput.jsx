@@ -11,14 +11,14 @@ export default function OutlinedTextInput({lable="Name",placeholder="Your Name",
         ...DefaultTheme,
         colors: {
           ...DefaultTheme.colors,
-          primary:colors.brown,
+          primary:colors.lightpurple,
           text: colors.black, // Color of the input text
         },
       };
     return (
         <TextInput 
          multiline={multipleline}
-        outlineColor={colors.brown}
+        outlineColor={colors.purple}
         onChangeText={(e)=>changefunc(e)}
           value={val}
         theme={theme}

@@ -1,4 +1,4 @@
-import { View, Text,Modal,TouchableOpacity,Pressable,Image,StyleSheet,ImageBackground,ScrollView, Dimensions } from 'react-native'
+import { View, Text,Modal,TouchableOpacity,Pressable,Image,StyleSheet,ImageBackground,ScrollView, Dimensions ,TextInput} from 'react-native'
 import React from 'react'
 import colors from "../../helpers/colors"
 import fonts from "../../helpers/fonts"
@@ -9,75 +9,59 @@ import CaptionText from "../../components/Typography/CaptionText"
 import LableText from "../../components/Typography/LableText"
 import SubtitleText from "../../components/Typography/Subtitle"
 import EntypoIcon from "react-native-vector-icons/Entypo"
-import FeatherIcon from "react-native-vector-icons/Feather"
+import Feather from "react-native-vector-icons/Feather"
 import MaterialIcon from "react-native-vector-icons/MaterialIcons"
 import { RFPercentage as rp, RFValue as rf } from "react-native-responsive-fontsize";
 import ButtonFilled from "../../components/buttons/ButtonFilled"
-import { TextInput,DefaultTheme} from 'react-native-paper';
+import { DefaultTheme} from 'react-native-paper';
 import OutlinedTextInput from '../../components/Inputs/OutlinedTextInput'
 import PasswordInput from '../../components/Inputs/PasswordInput'
 import { CheckBox } from 'react-native-elements'
 import ScreenNames from '../../helpers/routes'
+import ButtonOutline from '../../components/buttons/ButtonOutline'
 export default function SigninScreen({navigation,route}) {
-    const{role}=route.params
-    console.log(role)
     const [email, setemail] = React.useState('');
     const [password,setpassword]=React.useState("")
     const [remember, setremember] = React.useState(false);
     const LoginFunc=()=>{
-      if(role==="homeowner")
-      {
-        navigation.navigate(ScreenNames.Hmbottomtab)
-      }
-      else if(role==='tradepartner')
-      {
-        navigation.navigate(ScreenNames.Tpbottomtab)
-      }
-      else
-      {
-        navigation.navigate(ScreenNames.Tmbottomtab)
-      }
     }
  return (
 <Screen>
-    <ImageBackground  source={require("../../../assets/images/Onboarding.png")} style={{flex:1}}>
+    <View style={{flex:1}}>
              <ScrollView showsVerticalScrollIndicator={false}>
-             <View style={{width:Dimensions.get("screen").width,height:Dimensions.get("screen").height,justifyContent:"center",alignItems:"center"}}>
-             <Image resizeMode='contain' style={{height:120,width:120}} source={require("../../../assets/images/logo.png")}/>
-            <SubtitleText text={"Sign in to your Account"} size='m' style={{marginTop:rp(2),marginBottom:rp(3)}}/>
-            <OutlinedTextInput  changefunc={(e)=>setemail(e)} val={email} lable='Email' placeholder='Email' style={{marginBottom:rp(1.5)}}/>
-            <PasswordInput  changefunc={(e)=>setpassword(e)} val={password} lable='Password' placeholder='Password' style={{marginBottom:rp(1.5)}}/>
-              <View style={{width:"100%",display:"flex",flexDirection:"row",alignItems:"center",justifyContent:"space-between",marginVertical:rp(2)}}>
-                <View style={{display:"flex",flexDirection:"row",alignItems:"center"}}>
-                <CheckBox
-                style={{margin:0}}
-                 checked={remember}
-                 onPress={() => setremember(!remember)}
-           // Use ThemeProvider to make change for all checkbox
-           iconType="material-community"
-           checkedIcon="checkbox-marked"
-           uncheckedIcon="checkbox-blank-outline"
-           checkedColor={colors.brown}
-          
-         />
+             <View style={{display:"flex",flexDirection:"row",alignItems:"center",marginHorizontal:rp(2),marginTop:15}}>
+              <Pressable style={{backgroundColor:colors.purple,borderRadius:5}}>
+              <Feather name="chevron-left" size={28} color={colors.white}/>
+              </Pressable>
+            </View>
+             <View style={{justifyContent:"center",alignItems:"center",marginTop:rp(5)}}>
+            
+            <Heading text={"Login"} h='h2' style={{marginTop:rp(2),marginBottom:rp(3)}}/>
 
-                <CaptionText text={"Remember me"}/>
-                </View>
-                <Pressable onPress={()=>navigation.navigate(ScreenNames.forgotScreen)} style={{marginRight:rp(2)}}>
-                    <ButonText text={"Forgot Password?"} color={colors.brown}/>
-                </Pressable>
-              </View>
-              <ButtonFilled func={()=>LoginFunc()} text={"Sign In"} style={{marginVertical:rp(3)}} textstyle={{
+            <View style={{width:"90%",marginVertical:rp(5)}}>
+             <View style={{marginBottom:rp(2)}}>
+              <CaptionText text={"Correo"} style={{fontSize:rp(2.3)}}/>
+             <TextInput onChangeText={(e)=>setemail(e)} style={{borderRadius:rp(1),paddingHorizontal:rp(2),paddingVertical:rp(1),backgroundColor:colors.lightpurple,marginVertical:rp(1)}} placeholder='Email'/>
+             </View>
+             <View>
+              <CaptionText text={"Contraseña"} style={{fontSize:rp(2.3)}}/>
+             <TextInput onChangeText={(e)=>setpassword(e)} secureTextEntry style={{borderRadius:rp(1),paddingHorizontal:rp(2),paddingVertical:rp(1),backgroundColor:colors.lightpurple,marginVertical:rp(1)}} placeholder='Password'/>
+             </View>
+            </View>
+              <ButtonFilled func={()=>LoginFunc()} text={"Log In"}  textstyle={{
         textTransform:"capitalize"}}/>
+        <ButtonOutline text={"Login with Gmail"} style={{marginVertical:rp(2)}} textstyle={{fontSize:rp(2.2),fontFamily:fonts.mmedium,textTransform:"capitalize"}}>
+      <Image style={{height:20,width:20,marginRight:rp(2)}} source={require("../../../assets/images/google.png")}/>
+      </ButtonOutline>
         <View style={{display:"flex",alignItems:"center",justifyContent:"center"}}>
-                <Pressable onPress={()=>navigation.navigate(ScreenNames.signupScreen)} style={{display:"flex",flexDirection:"row",justifyContent:"center"}}>
-                    <SubtitleText size='s'  text={"Don't have an account?"} color={colors.lightblack} style={{fontSize:rp(2.3),marginRight:rp(1)}}/>
-                    <SubtitleText size='s'  text={"Sign Up"} color={colors.brown} style={{fontSize:rp(2.3)}}/>
+                <Pressable  style={{display:"flex",flexDirection:"row",justifyContent:"center"}}>
+                    <SubtitleText size='s'  text={"¿No tienes una cuenta? "} color={colors.lightblack} style={{fontSize:rp(2.3),marginRight:rp(1)}}/>
+                    <SubtitleText size='s'  text={"Sign Up"} color={colors.purple} style={{fontSize:rp(2.3)}}/>
                 </Pressable>
         </View> 
              </View>
              </ScrollView>
-    </ImageBackground>
+    </View>
 </Screen>
   )
 }

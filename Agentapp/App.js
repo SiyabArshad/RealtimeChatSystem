@@ -6,8 +6,8 @@ import { LogBox } from 'react-native';
 //screen and components import
 import Loading from './src/components/Loading';
 import OnBoarding from "./src/screens/OnBoardingScreens/OnBoarding"
-// import SignupScreen from './src/screens/authScreens/Signup';
-// import SigninScreen from './src/screens/authScreens/SignIn';
+ import SignupScreen from './src/screens/authScreens/Signup';
+ import SigninScreen from './src/screens/authScreens/SignIn';
 // import ForgotPasswordScreen from './src/screens/authScreens/ForgotPassword';
 // import Profile from './src/screens/ProfileScreens/Profile';
 // import EditProfile from './src/screens/ProfileScreens/EditProfile';
@@ -60,7 +60,7 @@ export default function App() {
     return <Loading visible={true}/>
   }
   return (
-<OnBoarding/>
+<SignupScreen/>
   );
 }
 
