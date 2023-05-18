@@ -21,13 +21,19 @@ export default function Messages({navigation,route}) {
   return (
     <Screen>
     <View style={{flex:1}}>
-    <View style={{display:"flex",flexDirection:"row",alignItems:"center",marginVertical:rp(3),paddingHorizontal:rp(2)}}>
+    <View style={{display:"flex",flexDirection:"row",justifyContent:"space-between",alignItems:"center",marginVertical:rp(3),paddingHorizontal:rp(2)}}>
+    <Pressable onPress={()=>navigation.openDrawer()} style={{display:"flex",alignItems:"center",justifyContent:"center"}}>
+    <Feather name="menu" size={24} color={colors.skyBlue} />
+    </Pressable>
+    <View style={{display:"flex",flexDirection:"row",alignItems:"center"}}>
         <Pressable onPress={()=>settab(0)} style={{display:"flex",justifyContent:"center",alignItems:"center",paddingBottom:rp(1),borderBottomWidth:tab===0?2:0,borderBottomColor:colors.skyBlue}}>
             <CaptionText color={tab===0?colors.skyBlue:colors.lightblack} text={"Conversations"}/>
         </Pressable>
         <Pressable onPress={()=>settab(1)} style={{marginLeft:rp(3),display:"flex",justifyContent:"center",alignItems:"center",paddingBottom:rp(1),borderBottomWidth:tab===1?2:0,borderBottomColor:colors.skyBlue}}>
             <CaptionText text={"Contacts"} color={tab===1?colors.skyBlue:colors.lightblack}/>
         </Pressable>
+    </View>
+   
     </View>
     <View style={{flex:1}}>
         <ScrollView>

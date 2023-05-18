@@ -3,7 +3,8 @@ const ScreenNames={
     loginScreen:"LoginScreen",
     signupScreen:"SignupScreen",
     contactsscreen:"contactsScreen",
-    inbox:"inboxScreen"
+    inbox:"inboxScreen",
+    addcontact:"addcontact"
 }
 
 export default ScreenNames

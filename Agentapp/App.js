@@ -11,9 +11,11 @@ import OnBoarding from "./src/screens/OnBoardingScreens/OnBoarding"
 import SignupScreen from './src/screens/authScreens/Signup';
 import SigninScreen from './src/screens/authScreens/SignIn';
 import Inbox from './src/screens/chat/Inbox';
-import Messages from './src/screens/chat/Messages';
 import ScreenNames from './src/helpers/routes';
+import Drawer from './src/helpers/Drawer';
+
 const Stack=createNativeStackNavigator()
+
 export default function App() {
   LogBox.ignoreAllLogs()
   const [fontsLoaded, error] = Font.useFonts({
@@ -37,7 +39,7 @@ export default function App() {
       <Stack.Screen name={ScreenNames.onBoarding} component={OnBoarding}/>
       <Stack.Screen name={ScreenNames.loginScreen} component={SigninScreen}/>
       <Stack.Screen name={ScreenNames.signupScreen} component={SignupScreen}/>
-      <Stack.Screen name={ScreenNames.contactsscreen} component={Messages}/>
+      <Stack.Screen name={ScreenNames.contactsscreen} component={Drawer}/>
       <Stack.Screen name={ScreenNames.inbox} component={Inbox}/>
   </Stack.Navigator>
 </NavigationContainer>
