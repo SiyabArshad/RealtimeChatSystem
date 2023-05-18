@@ -29,16 +29,16 @@ export default function SigninScreen({navigation,route}) {
             </View>
              <View style={{justifyContent:"center",alignItems:"center",marginTop:rp(5)}}>
             
-            <Heading text={"Login"} h='h2' style={{marginTop:rp(2),marginBottom:rp(3)}}/>
+            <Heading text={"Login"} h='h1' style={{marginTop:rp(2),marginBottom:rp(3)}}/>
 
             <View style={{width:"90%",marginVertical:rp(5)}}>
              <View style={{marginBottom:rp(2)}}>
               <CaptionText text={"Correo"} style={{fontSize:rp(2.3)}}/>
-             <TextInput onChangeText={(e)=>setemail(e)} style={{borderRadius:rp(1),paddingHorizontal:rp(2),paddingVertical:rp(1),backgroundColor:colors.lightpurple,marginVertical:rp(1)}} placeholder='Email'/>
+             <TextInput onChangeText={(e)=>setemail(e)} style={{borderRadius:rp(1),paddingHorizontal:rp(2),paddingVertical:rp(1.6),backgroundColor:colors.lightpurple,marginVertical:rp(1)}} placeholder='Email'/>
              </View>
              <View>
               <CaptionText text={"Contraseña"} style={{fontSize:rp(2.3)}}/>
-             <TextInput onChangeText={(e)=>setpassword(e)} secureTextEntry style={{borderRadius:rp(1),paddingHorizontal:rp(2),paddingVertical:rp(1),backgroundColor:colors.lightpurple,marginVertical:rp(1)}} placeholder='Password'/>
+             <TextInput onChangeText={(e)=>setpassword(e)} secureTextEntry style={{borderRadius:rp(1),paddingHorizontal:rp(2),paddingVertical:rp(1.6),backgroundColor:colors.lightpurple,marginVertical:rp(1)}} placeholder='Password'/>
              </View>
             </View>
               <ButtonFilled func={()=>LoginFunc()} text={"Log In"}  textstyle={{
