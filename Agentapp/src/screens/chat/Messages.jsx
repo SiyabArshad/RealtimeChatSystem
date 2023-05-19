@@ -29,12 +29,17 @@ export default function Messages({navigation,route}) {
     const [loading,setloading]=React.useState(false)
     const [lastconvs,setlastconvs]=React.useState([])
     const {clientID,token,_id}=userinfo?.currentUser
+    const[contacts,setcontacts]=React.useState([])
     const getallcons=async()=>{
         setloading(true)
         try{
          const {data}= await axios.get(`${origin}/api/chat/lastconversations`,{headers:{
             token,clientid:clientID
          }})
+         const res=await axios.get(`${origin}/api/chat/contact`,{headers:{
+            token,clientid:clientID
+         }})
+            setcontacts(res?.data)
             setlastconvs(data)        
         }
         catch{
@@ -43,6 +48,7 @@ export default function Messages({navigation,route}) {
           setloading(false)
         }
       }
+    
 React.useEffect(()=>{
     getallcons()
 
@@ -83,8 +89,8 @@ React.useEffect(()=>{
             tab===1&&
             <View>
             {
-            [1,2,3,4,5,6,7,8,9,10,11].map((item,i)=>(
-                <ContactCard func={()=>navigation.navigate(ScreenName.inbox)} key={i}/>
+            contacts&&contacts.map((item,i)=>(
+                <ContactCard item={item} func={()=>navigation.navigate(ScreenName.inbox)} key={i}/>
             ))
             }
             </View>
