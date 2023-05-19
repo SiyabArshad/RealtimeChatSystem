@@ -27,12 +27,21 @@ import ScreenNames from './routes';
 import { useNavigation } from '@react-navigation/native';
 import CaptionText from '../components/Typography/CaptionText';
 import { useSelector,useDispatch } from 'react-redux';
-import { loginaction,logoutaction } from '../redux/auth/action'
+import { loginaction,logoutaction,getCurrentuser } from '../redux/auth/action'
+import { GetBroadCast,UpdateBroadCast } from '../redux/broadcast/action';
 import axios from 'axios'
 export function DrawerContent(props) {
     const [checked,setchecked]=React.useState(false)
     const navigation=useNavigation()
     const dispatch=useDispatch()
+    const userinfo=useSelector(state=>state?.authReducer)
+    const {clientID,token}=userinfo?.currentUser
+    const binfo=useSelector(state=>state?.broadcastReducer)
+    React.useEffect(async()=>{
+      dispatch(GetBroadCast({clientid:clientID,token}))
+
+    },[])
+    
   return (
     <DrawerContentScrollView {...props}>
       <View
@@ -47,11 +56,13 @@ export function DrawerContent(props) {
             <Avatar rounded size={"medium"} source={require("../../assets/images/user.png")}/>
             </View>
           <Title style={styles.title}>Jean Clara</Title>
-
+          <CaptionText text={"ahmed@gmail.com"}/>
         </View>
           <View style={{display:"flex",flexDirection:"row",alignItems:"center",justifyContent:"space-between",marginVertical:RFPercentage(2)}}>
             <CaptionText text={"BroadCast"}/>
-            <Switch color={colors.purple} value={checked} onChange={()=>setchecked(!checked)}/>
+            <Switch color={colors.purple} value={binfo?.broadcast} onChange={()=>{
+               dispatch(UpdateBroadCast({clientid:clientID,token,broadcast:binfo?.broadcast}))
+            }}/>
         </View>
         </View>
         <Drawer.Section style={styles.drawerSection}>

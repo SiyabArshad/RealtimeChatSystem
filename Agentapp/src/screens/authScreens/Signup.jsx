@@ -15,6 +15,8 @@ import { useSelector,useDispatch } from 'react-redux';
 import { loginaction } from '../../redux/auth/action'
 import axios from 'axios'
 import origin from '../../helpers/api'
+import jwtDecode from 'jwt-decode';
+
 export default function SignupScreen({navigation,route}) {
      const dispatch=useDispatch()
     const [email, setemail] = React.useState('');
@@ -36,8 +38,10 @@ export default function SignupScreen({navigation,route}) {
           else if(email.length>10&&password.length>5)
           {
               const {data}=await axios.post(`${origin}/api/user/`,{email,password,role:"user"})
-               await dispatch(loginaction(data))
-               settype(true)
+              const decdata=jwtDecode(data) 
+              const info={token:data,...decdata}
+              await dispatch(loginaction(info))
+              settype(true)
                setError("Logged in Successfully")
           }
           else

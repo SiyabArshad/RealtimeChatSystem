@@ -59,7 +59,7 @@ const Routes=()=>{
   React.useEffect(() => {
     gettinguserstate()
   }, []);
-  console.log("i am consoling from ",userinfo)
+  // console.log("i am consoling from ",userinfo)
   if(loading)
   {
     return <Loading visible={true}/>
