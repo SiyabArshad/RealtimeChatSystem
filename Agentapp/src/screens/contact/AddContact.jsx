@@ -16,14 +16,64 @@ import { LinearProgress,Avatar } from 'react-native-elements'
 import ConversationCard from '../../components/ConversationCard'
 import ContactCard from "../../components/ContactCard"
 import ScreenName from "../../helpers/routes"
+import MessageCard from "../../components/MessageCard"
+import { useSelector,useDispatch } from 'react-redux';
+import { loginaction,getCurrentuser } from '../../redux/auth/action'
+import axios from 'axios'
+import origin from '../../helpers/api'
 export default function AddContact({navigation}) {
     const[fistname,setfirstname]=React.useState("")
     const[lastname,setlastname]=React.useState("")
     const[email,setemail]=React.useState("")
     const[phone,setphone]=React.useState("")
-
+    const [issubmit,setissubmit]=React.useState(false)
+    const [isload,setisload]=React.useState(false)
+    const [type,settype]=React.useState(false)
+    const [Error,setError]=React.useState('')
+    const userinfo=useSelector(state=>state?.authReducer)
+    const {clientID,token,_id}=userinfo?.currentUser
+    const AddFunc=async()=>{
+      setisload(true)
+      try{
+          if(email.length===0&&phone.length===0&&fistname.length===0)
+          {
+          setError("Some Feilds are Missing")
+          settype(false)
+          }
+          else if(email.length>10&&phone.length>8)
+          {
+              const {data}=await axios.post(`${origin}/api/chat/contact`,{firstname:fistname,lastname,email,phone,user:_id},{
+                headers:{
+                  token,
+                  clientid:clientID
+                }
+              })
+              console.log(data)
+               settype(true)
+               setError("Contact Added Successfully")
+          }
+          else
+          {
+              setError("InComplete Details")
+              settype(false)
+            
+            }
+      }
+      catch(e){
+          setError("Try again later")
+          settype(false)   
+        }
+        finally{
+          setissubmit(true)
+          setisload(false)
+        }
+    }
+    const callbacksubmit=()=>{
+      setissubmit(false)
+  }
   return (
     <Screen>
+      <MessageCard  show={issubmit} callshow={callbacksubmit}  message={Error} type={type}/>
     <View style={{flex:1}}>
     <View style={{display:"flex",flexDirection:"row",justifyContent:"space-between",alignItems:"center",marginVertical:rp(3),paddingHorizontal:rp(2)}}>
     <Pressable onPress={()=>navigation.openDrawer()} style={{display:"flex",alignItems:"center",justifyContent:"center"}}>
@@ -45,13 +95,13 @@ export default function AddContact({navigation}) {
              <TextInput onChangeText={(e)=>setlastname(e)} value={lastname} style={{borderRadius:rp(1),paddingHorizontal:rp(2),paddingVertical:rp(1.6),backgroundColor:colors.lightpurple,marginVertical:rp(1)}} placeholder='Last Name'/>
              </View>
              <View style={{marginBottom:rp(2)}}>
-             <TextInput onChangeText={(e)=>setemail(e)} style={{borderRadius:rp(1),paddingHorizontal:rp(2),paddingVertical:rp(1.6),backgroundColor:colors.lightpurple,marginVertical:rp(1)}} placeholder='Email'/>
+             <TextInput onChangeText={(e)=>setemail(e)} value={email} style={{borderRadius:rp(1),paddingHorizontal:rp(2),paddingVertical:rp(1.6),backgroundColor:colors.lightpurple,marginVertical:rp(1)}} placeholder='Email'/>
              </View>
              <View>
              <TextInput maxLength={15} keyboardType='decimal-pad' value={phone} onChangeText={(e)=>setphone(e)}  style={{borderRadius:rp(1),paddingHorizontal:rp(2),paddingVertical:rp(1.6),backgroundColor:colors.lightpurple,marginVertical:rp(1)}} placeholder='Phone'/>
              </View>
             </View>
-              <ButtonFilled  text={"Create Contact"}  textstyle={{
+              <ButtonFilled  btnloading={isload} disable={issubmit}  func={()=>AddFunc()} text={"Create Contact"}  textstyle={{
         textTransform:"capitalize"}}/> 
              </View>
              </ScrollView>

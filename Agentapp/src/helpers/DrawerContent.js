@@ -29,18 +29,23 @@ import CaptionText from '../components/Typography/CaptionText';
 import { useSelector,useDispatch } from 'react-redux';
 import { loginaction,logoutaction,getCurrentuser } from '../redux/auth/action'
 import { GetBroadCast,UpdateBroadCast } from '../redux/broadcast/action';
+import { GetProfile } from '../redux/profile/action';
 import axios from 'axios'
 export function DrawerContent(props) {
-    const [checked,setchecked]=React.useState(false)
     const navigation=useNavigation()
     const dispatch=useDispatch()
     const userinfo=useSelector(state=>state?.authReducer)
-    const {clientID,token}=userinfo?.currentUser
+    const {clientID,token,_id}=userinfo?.currentUser
     const binfo=useSelector(state=>state?.broadcastReducer)
-    React.useEffect(async()=>{
+    const pinfo=useSelector(state=>state?.profileReducer)
+    const [checked,setchecked]=React.useState(binfo?.broadcast||false)
+    const fetchdata=async()=>{
       dispatch(GetBroadCast({clientid:clientID,token}))
-
-    },[])
+      dispatch(GetProfile({clientid:clientID,token}))
+    }
+    React.useEffect(()=>{
+      fetchdata()
+    },[clientID,token])
     
   return (
     <DrawerContentScrollView {...props}>
@@ -55,13 +60,14 @@ export function DrawerContent(props) {
                <View style={{borderWidth:1,borderColor:colors.brown,marginBottom:RFPercentage(.4),padding:RFPercentage(.5),display:"flex",justifyContent:"center",alignItems:"center",height:60,width:60,borderRadius:30}}>
             <Avatar rounded size={"medium"} source={require("../../assets/images/user.png")}/>
             </View>
-          <Title style={styles.title}>Jean Clara</Title>
-          <CaptionText text={"ahmed@gmail.com"}/>
+          <Title style={styles.title}>{pinfo.profile?.name}</Title>
+          <CaptionText text={pinfo.profile?.email}/>
         </View>
           <View style={{display:"flex",flexDirection:"row",alignItems:"center",justifyContent:"space-between",marginVertical:RFPercentage(2)}}>
             <CaptionText text={"BroadCast"}/>
             <Switch color={colors.purple} value={binfo?.broadcast} onChange={()=>{
-               dispatch(UpdateBroadCast({clientid:clientID,token,broadcast:binfo?.broadcast}))
+              setchecked(!checked)
+              dispatch(UpdateBroadCast({clientid:clientID,token,broadcast:binfo?.broadcast}))
             }}/>
         </View>
         </View>
