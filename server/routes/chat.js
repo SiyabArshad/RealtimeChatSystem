@@ -119,6 +119,13 @@ router.post("/contact", async (req,res) =>{
    
   )   
 });
+//get all contacts
+router.get("/contact", async (req,res) =>{
+  clientID = req.headers.clientid;
+  const responsenewContact = await Contact.find({clientID : clientID });
+  res.send(responsenewContact)
+  } 
+);
 
 // route token test JSON.parse(atob(token.split('.')[1]));
 

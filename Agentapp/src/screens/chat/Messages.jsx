@@ -16,10 +16,42 @@ import { LinearProgress,Avatar } from 'react-native-elements'
 import ConversationCard from '../../components/ConversationCard'
 import ContactCard from "../../components/ContactCard"
 import ScreenName from "../../helpers/routes"
+import Loading from "../../components/Loading"
+import origin from "../../helpers/api.js"
+import axios from "axios"
+import { useSelector,useDispatch } from 'react-redux';
+import { useIsFocused } from '@react-navigation/native';
+import formatDate from '../../helpers/formatdate'
 export default function Messages({navigation,route}) {
+    const focus=useIsFocused()
     const[tab,settab]=React.useState(0)
+    const userinfo=useSelector(state=>state?.authReducer)
+    const [loading,setloading]=React.useState(false)
+    const [lastconvs,setlastconvs]=React.useState([])
+    const {clientID,token,_id}=userinfo?.currentUser
+    const getallcons=async()=>{
+        setloading(true)
+        try{
+         const {data}= await axios.get(`${origin}/api/chat/lastconversations`,{headers:{
+            token,clientid:clientID
+         }})
+            setlastconvs(data)        
+        }
+        catch{
+        }
+        finally{
+          setloading(false)
+        }
+      }
+React.useEffect(()=>{
+    getallcons()
+
+},[])
+
   return (
     <Screen>
+            <Loading visible={loading}/>
+
     <View style={{flex:1}}>
     <View style={{display:"flex",flexDirection:"row",justifyContent:"space-between",alignItems:"center",marginVertical:rp(3),paddingHorizontal:rp(2)}}>
     <Pressable onPress={()=>navigation.openDrawer()} style={{display:"flex",alignItems:"center",justifyContent:"center"}}>
@@ -41,8 +73,8 @@ export default function Messages({navigation,route}) {
             tab===0&&
             <View>
             {
-            [1,2,3,4,5,6,7,8,9,10,11].map((item,i)=>(
-                <ConversationCard func={()=>navigation.navigate(ScreenName.inbox)} key={i}/>
+            lastconvs&&lastconvs.map((item,i)=>(
+                <ConversationCard item={item} func={()=>navigation.navigate(ScreenName.inbox)} key={i}/>
             ))
             }
             </View>

@@ -11,9 +11,19 @@ import Feather from "react-native-vector-icons/Feather"
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
 import MaterialIcons from "react-native-vector-icons/MaterialIcons"
 import ScreenNames from '../../helpers/routes'
+import Loading from "../../components/Loading"
+import origin from "../../helpers/api.js"
+import axios from "axios"
+import { useSelector,useDispatch } from 'react-redux';
+
 export default function Inbox({navigation,route}) {
+    const userinfo=useSelector(state=>state?.authReducer)
+    const [loading,setloading]=React.useState(false)
+    const {clientID,token,_id}=userinfo?.currentUser
+
   return (
     <Screen>
+    <Loading visible={loading}/>
     <View style={{flex:1,marginHorizontal:rp(2),display:"flex",flexDirection:"column",justifyContent:"space-between"}}>
     <View style={{display:"flex",flexDirection:"row",justifyContent:"space-between",alignItems:"center",marginTop:rp(1)
 }}>
