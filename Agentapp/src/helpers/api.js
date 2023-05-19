@@ -1,12 +1,2 @@
-import axios from 'axios';
-import origin from "./api"
-const api = axios.create({
-  baseURL: origin, 
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
-
-
-
-export default api;
+const origin="http://192.168.0.101:5000"
+export default origin

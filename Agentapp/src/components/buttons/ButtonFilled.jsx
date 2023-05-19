@@ -5,9 +5,9 @@ import fonts from '../../helpers/fonts'
 import ButtonText from '../Typography/ButtonText'
 import { RFPercentage as rp, RFValue as rf } from "react-native-responsive-fontsize";
 
-export default function ButtonFilled({text,style,func=()=>{},textstyle,btnloading,children}) {
+export default function ButtonFilled({text,style,func=()=>{},textstyle,btnloading,disable=false,children}) {
   return (
-    <Pressable onPress={()=>func()} style={[{backgroundColor:colors.purple,width:"90%",paddingVertical:rp(1.5),display:"flex",flexDirection:"row",justifyContent:"center",alignItems:"center",marginHorizontal:"5%",borderRadius:rp(2.7)},style]}>
+    <Pressable disabled={disable} onPress={()=>func()} style={[{backgroundColor:colors.purple,width:"90%",paddingVertical:rp(1.5),display:"flex",flexDirection:"row",justifyContent:"center",alignItems:"center",marginHorizontal:"5%",borderRadius:rp(2.7)},style]}>
   {
     btnloading?<ActivityIndicator size={24} color={colors.white}/>
     :

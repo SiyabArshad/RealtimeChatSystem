@@ -26,9 +26,13 @@ import { Avatar } from 'react-native-elements'
 import ScreenNames from './routes';
 import { useNavigation } from '@react-navigation/native';
 import CaptionText from '../components/Typography/CaptionText';
+import { useSelector,useDispatch } from 'react-redux';
+import { loginaction,logoutaction } from '../redux/auth/action'
+import axios from 'axios'
 export function DrawerContent(props) {
     const [checked,setchecked]=React.useState(false)
     const navigation=useNavigation()
+    const dispatch=useDispatch()
   return (
     <DrawerContentScrollView {...props}>
       <View
@@ -75,7 +79,7 @@ export function DrawerContent(props) {
                 )}
             label="Logout"
             labelStyle={{fontFamily:fonts.mregular,fontSize:RFPercentage(2.6)}}
-            onPress={() => {navigation.navigate(ScreenNames.onBoarding)}}
+            onPress={() => {dispatch(logoutaction())}}
           />
       </View>
     </DrawerContentScrollView>

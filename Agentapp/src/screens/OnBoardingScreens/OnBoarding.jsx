@@ -20,10 +20,10 @@ export default function OnBoarding({navigation,route}) {
       </View>
   <View style={{width:"100%"}}>
 <View style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
-<Pressable style={{display:"flex",flexDirection:"row",justifyContent:"center",alignItems:"center",marginVertical:rp(3)}}>
+<Pressable onPress={()=>navigation.navigate(ScreenNames.loginScreen)} style={{display:"flex",flexDirection:"row",justifyContent:"center",alignItems:"center",marginVertical:rp(3)}}>
   <LableText text={"¿Ya tienes una cuenta? "} color={colors.lightblack} style={{fontSize:rp(2.1)}}/> 
   <LableText text={"Log In"} color={colors.purple} style={{fontSize:rp(2.1)}}/> 
-    </Pressable>
+  </Pressable>
 </View>
      <ButtonFilled func={()=>navigation.navigate(ScreenNames.signupScreen)}  text={"Registrate con tu Email"} style={{marginBottom:rp(1.5)}} textstyle={{fontSize:rp(2.2),fontFamily:fonts.mmedium,textTransform:"capitalize"}}/>
      <ButtonOutline text={"Registrate con Gmail"}  textstyle={{fontSize:rp(2.2),fontFamily:fonts.mmedium,textTransform:"capitalize"}}>

@@ -11,15 +11,57 @@ import { RFPercentage as rp, RFValue as rf } from "react-native-responsive-fonts
 import ButtonFilled from "../../components/buttons/ButtonFilled"
 import ButtonOutline from '../../components/buttons/ButtonOutline'
 import ScreenName from "../../helpers/routes"
+import MessageCard from "../../components/MessageCard"
+import { useSelector,useDispatch } from 'react-redux';
+import { loginaction } from '../../redux/auth/action'
+import axios from 'axios'
+import origin from '../../helpers/api'
+
 export default function SigninScreen({navigation,route}) {
+    const dispatch=useDispatch()
     const [email, setemail] = React.useState('');
     const [password,setpassword]=React.useState("")
-    const [remember, setremember] = React.useState(false);
-    const LoginFunc=()=>{
-  navigation.navigate(ScreenName.contactsscreen)
+    const [isload,setisload]=React.useState(false)
+    const [issubmit,setissubmit]=React.useState(false)
+    const [type,settype]=React.useState(false)
+    const [Error,setError]=React.useState('')
+    const LoginFunc=async()=>{
+      setisload(true)
+      try{
+          if(email.length===0&&password.length===0)
+          {
+          setError("Some Feilds are Missing")
+          settype(false)
+          }
+          else if(email.length>10&&password.length>5)
+          {
+              const {data}=await axios.post(`${origin}/api/auth/`,{email,password})
+               await dispatch(loginaction(data))
+               settype(true)
+               setError("Logged in Successfully")
+          }
+          else
+          {
+              setError("Invalid Credentials")
+              settype(false)
+            
+            }
+      }
+      catch(e){
+          setError("Try again later")
+          settype(false)   
+        }
+        finally{
+          setissubmit(true)
+          setisload(false)
+        }
     }
+    const callbacksubmit=()=>{
+      setissubmit(false)
+  }
  return (
 <Screen>
+<MessageCard  show={issubmit} callshow={callbacksubmit}  message={Error} type={type}/>
     <View style={{flex:1}}>
              <ScrollView showsVerticalScrollIndicator={false}>
              <View style={{display:"flex",flexDirection:"row",alignItems:"center",marginHorizontal:rp(2),marginTop:15}}>
@@ -41,7 +83,7 @@ export default function SigninScreen({navigation,route}) {
              <TextInput onChangeText={(e)=>setpassword(e)} secureTextEntry style={{borderRadius:rp(1),paddingHorizontal:rp(2),paddingVertical:rp(1.6),backgroundColor:colors.lightpurple,marginVertical:rp(1)}} placeholder='Password'/>
              </View>
             </View>
-              <ButtonFilled func={()=>LoginFunc()} text={"Log In"}  textstyle={{
+              <ButtonFilled btnloading={isload} disable={issubmit}  func={()=>LoginFunc()} text={"Log In"}  textstyle={{
         textTransform:"capitalize"}}/>
         <ButtonOutline text={"Login with Gmail"} style={{marginVertical:rp(2)}} textstyle={{fontSize:rp(2.2),fontFamily:fonts.mmedium,textTransform:"capitalize"}}>
       <Image style={{height:20,width:20,marginRight:rp(2)}} source={require("../../../assets/images/google.png")}/>

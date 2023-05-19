@@ -10,15 +10,58 @@ import { RFPercentage as rp, RFValue as rf } from "react-native-responsive-fonts
 import ButtonFilled from "../../components/buttons/ButtonFilled"
 import { CheckBox } from 'react-native-elements'
 import ScreenNames from "../../helpers/routes"
+import MessageCard from "../../components/MessageCard"
+import { useSelector,useDispatch } from 'react-redux';
+import { loginaction } from '../../redux/auth/action'
+import axios from 'axios'
+import origin from '../../helpers/api'
 export default function SignupScreen({navigation,route}) {
+     const dispatch=useDispatch()
     const [email, setemail] = React.useState('');
     const [password,setpassword]=React.useState("")
+    const [name,setname]=React.useState("")
     const [remember, setremember] = React.useState(false);
-    const LoginFunc=()=>{
-      navigation.navigate(ScreenNames.contactsscreen)
+    const [isload,setisload]=React.useState(false)
+    const [issubmit,setissubmit]=React.useState(false)
+    const [type,settype]=React.useState(false)
+    const [Error,setError]=React.useState('')
+    const LoginFunc=async()=>{
+      setisload(true)
+      try{
+          if(email.length===0&&password.length===0)
+          {
+          setError("Some Feilds are Missing")
+          settype(false)
+          }
+          else if(email.length>10&&password.length>5)
+          {
+              const {data}=await axios.post(`${origin}/api/user/`,{email,password,role:"user"})
+               await dispatch(loginaction(data))
+               settype(true)
+               setError("Logged in Successfully")
+          }
+          else
+          {
+              setError("Invalid Credentials")
+              settype(false)
+            
+            }
+      }
+      catch(e){
+          setError("Try again later")
+          settype(false)   
+        }
+        finally{
+          setissubmit(true)
+          setisload(false)
+        }
     }
+    const callbacksubmit=()=>{
+      setissubmit(false)
+  }
  return (
 <Screen>
+<MessageCard type={type} message={Error} show={issubmit} callshow={callbacksubmit}/>
     <View style={{flex:1}}>
              <ScrollView showsVerticalScrollIndicator={false}>
              <View style={{display:"flex",flexDirection:"row",alignItems:"center",marginHorizontal:rp(2),marginTop:15}}>
@@ -31,13 +74,17 @@ export default function SignupScreen({navigation,route}) {
             <Heading text={"Crear Cuenta con su Email"} h='h1' style={{marginTop:rp(2),marginBottom:rp(3),textAlign:"center"}}/>
 
             <View style={{width:"90%",marginVertical:rp(5)}}>
+            <View style={{marginBottom:rp(2)}}>
+              <CaptionText text={"Name"} style={{fontSize:rp(2.3)}}/>
+             <TextInput value={name} onChangeText={(e)=>setname(e)} style={{borderRadius:rp(1),paddingHorizontal:rp(2),paddingVertical:rp(1.6),backgroundColor:colors.lightpurple,marginVertical:rp(1)}} placeholder='Name'/>
+             </View>
              <View style={{marginBottom:rp(2)}}>
               <CaptionText text={"Correo"} style={{fontSize:rp(2.3)}}/>
-             <TextInput onChangeText={(e)=>setemail(e)} style={{borderRadius:rp(1),paddingHorizontal:rp(2),paddingVertical:rp(1.6),backgroundColor:colors.lightpurple,marginVertical:rp(1)}} placeholder='Email'/>
+             <TextInput value={email} onChangeText={(e)=>setemail(e)} style={{borderRadius:rp(1),paddingHorizontal:rp(2),paddingVertical:rp(1.6),backgroundColor:colors.lightpurple,marginVertical:rp(1)}} placeholder='Email'/>
              </View>
              <View>
               <CaptionText text={"Contraseña"} style={{fontSize:rp(2.3)}}/>
-             <TextInput onChangeText={(e)=>setpassword(e)} secureTextEntry style={{borderRadius:rp(1),paddingHorizontal:rp(2),paddingVertical:rp(1.6),backgroundColor:colors.lightpurple,marginVertical:rp(1)}} placeholder='Password'/>
+             <TextInput value={password} onChangeText={(e)=>setpassword(e)} secureTextEntry style={{borderRadius:rp(1),paddingHorizontal:rp(2),paddingVertical:rp(1.6),backgroundColor:colors.lightpurple,marginVertical:rp(1)}} placeholder='Password'/>
              </View>
              <View style={{width:"100%",display:"flex",flexDirection:"row",alignItems:"center",justifyContent:"space-between"}}>
                 <View style={{display:"flex",flexDirection:"row",alignItems:"center",justifyContent:"center"}}>
@@ -52,14 +99,14 @@ export default function SignupScreen({navigation,route}) {
            checkedColor={colors.purple}
           
          />
-                <CaptionText style={{textAlign:"center"}} color={colors.black} text={"Estoy de acuerdo con los terminos y condiciones"}/>
+                <CaptionText style={{textAlign:"center",width:"80%"}} color={colors.black} text={"Estoy de acuerdo con los terminos y condiciones"}/>
                 </View>
                 
               </View>
             </View>
 
            
-              <ButtonFilled func={()=>LoginFunc()} style={{marginVertical:rp(2)}} te text={"Registrate con tu Email"}  textstyle={{
+              <ButtonFilled  btnloading={isload} disable={issubmit} func={()=>LoginFunc()} style={{marginVertical:rp(2)}} te text={"Registrate con tu Email"}  textstyle={{
         textTransform:"capitalize",fontSize:rp(2.2)}}/>
     
         <View style={{display:"flex",alignItems:"center",justifyContent:"center"}}>

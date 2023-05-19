@@ -27,7 +27,7 @@ export default function MessageCard({show,callshow,message,type}) {
  <View style={{ display:"flex",alignItems:"center",justifyContent:"center"}}>
       {
         type?
-        <Icon1 name="checkmark-done-circle" size={42} color={colors.brown} />
+        <Icon1 name="checkmark-done-circle" size={42} color={colors.purple} />
         :
         <Icon2 name="alert" size={42} color={colors.danger} />
       }
