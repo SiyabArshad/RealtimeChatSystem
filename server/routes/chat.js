@@ -14,7 +14,8 @@ router.get("/conversations", async (req,res) =>{
   clientID = req.headers.clientid;
   const { contact_id } = req.query||req.body;
   console.log(contact_id)
-      const message_read = await Message.find({ clientID: clientID,contact_id:contact_id}).limit(30)
+  const message_read = await Message.find({ clientID, contact_id })
+  .limit(30); // Limit the result to 30 records
       res.send(message_read);
 });
 

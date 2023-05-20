@@ -40,8 +40,8 @@ export function DrawerContent(props) {
     const pinfo=useSelector(state=>state?.profileReducer)
     const [checked,setchecked]=React.useState(binfo?.broadcast||false)
     const fetchdata=async()=>{
-      dispatch(GetBroadCast({clientid:clientID,token}))
-      dispatch(GetProfile({clientid:clientID,token}))
+      await dispatch(GetBroadCast({clientid:clientID,token}))
+      await dispatch(GetProfile({clientid:clientID,token}))
     }
     React.useEffect(()=>{
       fetchdata()

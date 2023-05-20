@@ -33,12 +33,20 @@ export default function Messages({navigation,route}) {
     const getallcons=async()=>{
         setloading(true)
         try{
-         const {data}= await axios.get(`${origin}/api/chat/lastconversations`,{headers:{
-            token,clientid:clientID
-         }})
-         const res=await axios.get(`${origin}/api/chat/contact`,{headers:{
-            token,clientid:clientID
-         }})
+         const {data}= await axios.get(`${origin}/api/chat/lastconversations`,{
+            headers:{
+                'Content-Type': 'application/json',
+                'x-auth-token':token,
+                'clientid':clientID
+              }    
+        })
+         const res=await axios.get(`${origin}/api/chat/contact`,{
+            headers:{
+                'Content-Type': 'application/json',
+                'x-auth-token':token,
+                'clientid':clientID
+              }    
+        })
             setcontacts(res?.data)
             setlastconvs(data)        
         }

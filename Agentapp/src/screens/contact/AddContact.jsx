@@ -44,8 +44,9 @@ export default function AddContact({navigation}) {
           {
               const {data}=await axios.post(`${origin}/api/chat/contact`,{firstname:fistname,lastname,email,phone,user:_id},{
                 headers:{
-                  token,
-                  clientid:clientID
+                  'Content-Type': 'application/json',
+                  'x-auth-token':token,
+                  'clientid':clientID
                 }
               })
               console.log(data)

@@ -33,7 +33,7 @@ export default function ConversationCard({func,item,lastconvs}) {
                                 <LabelText style={{marginTop:rp(1),fontSize:rp(1.8)}} color={colors.lightblack} text={`${lastmessage[0]?.text.slice(0,15)}....`}/>
                              </View>
                             </View>
-                            <CaptionText text={formatDate(lastmessage[0]?.time)}/>
+                            <CaptionText text={lastmessage[0]?.time&&formatDate(lastmessage[0]?.time)}/>
     </Pressable>
   )
 }

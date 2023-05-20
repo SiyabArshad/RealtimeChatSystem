@@ -82,7 +82,6 @@ const handleScroll = () => {
   }
 };
 const scrollToBottom = () => {
-  // chatsRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
   const chatWindow = chatsRef.current;
   chatWindow.scrollTop = chatWindow.scrollHeight;
 };

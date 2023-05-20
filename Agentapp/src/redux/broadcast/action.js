@@ -35,16 +35,3 @@ export const UpdateBroadCast=(payload)=>{
     
 }
 }
-
-// if(state===false)
-// {
-//     //set to all
-//     await http.put(`http://localhost:5000/api/user/companyinfo`,{confidentiality:"all"})
-//     setbd(true)
-// }
-// else
-// {
-//     //set to indivisual
-//     await http.put(`http://localhost:5000/api/user/companyinfo`,{confidentiality:"indivisual"})
-//     setbd(false)
-// }

@@ -7,6 +7,8 @@ import Ionicons from "react-native-vector-icons/Ionicons"
 import { RFPercentage as rp, RFValue as rf } from "react-native-responsive-fontsize";
 import {Avatar} from "react-native-paper"
 import ChatBox from '../../components/Chat/ChatBox'
+import IncommingMessage from '../../components/Chat/IncommingMessage'
+import OutGoinMessage from '../../components/Chat/OutGoinMessage'
 import Feather from "react-native-vector-icons/Feather"
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
 import MaterialIcons from "react-native-vector-icons/MaterialIcons"
@@ -21,6 +23,12 @@ import io from 'socket.io-client';
 const socket=io(origin);
 export default function Inbox({navigation,route}) {
   const focus=useIsFocused()
+  const scrollViewRef = React.useRef(null);
+  const scrollToBottom = () => {
+    const chatWindow = scrollViewRef.current;
+    chatWindow.scrollToEnd({ animated: true });
+  };
+
     const userinfo=useSelector(state=>state?.authReducer)
     const [loading,setloading]=React.useState(false)
     const [messages, setMessages] = React.useState([]);
@@ -35,12 +43,16 @@ export default function Inbox({navigation,route}) {
         try{
           const res=await axios.get(`${origin}/api/chat/conversations?contact_id=${chatinfo?.contactid}`,{
             headers:{
-                token,clientid:clientID
+              'Content-Type': 'application/json',
+              'x-auth-token':token,
+              'clientid':clientID
             }
           })
           const res2=await axios.get(`${origin}/api/chat/contact/${chatinfo?.contactid}`,{
             headers:{
-                token,clientid:clientID
+              'Content-Type': 'application/json',
+              'x-auth-token':token,
+              'clientid':clientID
             }
           })
           setMessages(res?.data)
@@ -69,7 +81,9 @@ export default function Inbox({navigation,route}) {
               }
               const res=await axios.post(`${origin}/api/chat/broadcast`,messagedata,{
                 headers:{
-                    token,clientid:clientID
+                  'Content-Type': 'application/json',
+                  'x-auth-token':token,
+                  'clientid':clientID
                 }
               });
              } catch (error) {
@@ -90,7 +104,9 @@ export default function Inbox({navigation,route}) {
               }
               const res=await axios.post(`${origin}/api/chat/conversations`,messagedata,{
                 headers:{
-                    token,clientid:clientID
+                  'Content-Type': 'application/json',
+                  'x-auth-token':token,
+                  'clientid':clientID
                 }
               });
             } catch (error) {
@@ -106,25 +122,18 @@ export default function Inbox({navigation,route}) {
       socket.connect()
       socket.on('messageevent',(payload)=>{
       setMessages(prev=>[...prev,payload])
+      scrollToBottom()
     })
     socket.on('broadcastmessageevent',(payload)=>{
       setMessages(prev=>[...prev,payload])
+      scrollToBottom()
     })
       socket.emit("joinChatRoom",{roomid:`chat_${chatinfo?.contactid}`})
         socket.emit("joinBroadCastRoom", { roomid: `broadcast_${clientID}` });
-   
         getallcons() 
-   
-        },[focus,navigation,route])
-    // React.useEffect(()=>{
-    //     socket.connect()
-    //     socket.on('messageevent',(payload)=>{
-    //     setMessages(prev=>[...prev,payload])
-    //   })
-    //   socket.on('broadcastmessageevent',(payload)=>{
-    //     setMessages(prev=>[...prev,payload])
-    //   })
-    // },[])
+        scrollToBottom()
+        },[focus,navigation,route,scrollViewRef.current])
+    
   return (
     <Screen>
     <Loading visible={loading}/>
@@ -144,7 +153,17 @@ export default function Inbox({navigation,route}) {
         </View>
       
     </View>
-    <ChatBox messages={messages}/>
+    <View style={{flex:1,paddingVertical:rp(2)}}>
+        <ScrollView ref={scrollViewRef} showsVerticalScrollIndicator={false}>
+        {
+                messages&&messages.map((item,i)=>(
+                    item?.msgType==='outbound'?<OutGoinMessage key={i} message={item}/>:<IncommingMessage key={i} message={item}/>
+                ))
+            }
+        </ScrollView>
+    </View>
+  
+    {/* <ChatBox scrollViewRef={scrollViewRef} messages={messages}/> */}
     <View style={{width:"100%",display:"flex",flexDirection:"row",paddingVertical:rp(1.5),paddingHorizontal:rp(1),alignItems:"center"}}>
         <TextInput value={typemessage} onChangeText={(e)=>settypemessage(e)} style={{width:"70%",paddingHorizontal:rp(2),paddingVertical:rp(2)}} placeholder='Your Message'/>
         <View style={{width:"30%",display:"flex",flexDirection:"row",alignItems:"center"}}>
