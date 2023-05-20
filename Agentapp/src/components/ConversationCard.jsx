@@ -30,7 +30,7 @@ export default function ConversationCard({func,item,lastconvs}) {
                             {/* <Avatar rounded size="medium" source={require("../../assets/images/user.png")}/> */}
                             <View style={{marginLeft:rp(2)}}>
                             <SubTitleText text={item?.first_name!==''&&item?.first_name!==null?item?.first_name:"Guest"} color={colors.lightblack} size='m'/>
-                                <LabelText style={{marginTop:rp(1),fontSize:rp(1.8)}} color={colors.lightblack} text={`${lastmessage[0]?.text.slice(0,15)}....`}/>
+                                <LabelText style={{marginTop:rp(1),fontSize:rp(1.8)}} color={colors.lightblack} text={lastmessage[0]?`${lastmessage[0].text.slice(0,15)}....`:"Start Conversation"}/>
                              </View>
                             </View>
                             <CaptionText text={lastmessage[0]?.time&&formatDate(lastmessage[0]?.time)}/>
