@@ -15,8 +15,9 @@ router.get("/conversations", async (req,res) =>{
   const { contact_id } = req.query||req.body;
   console.log(contact_id)
   const message_read = await Message.find({ clientID, contact_id })
+  .sort({ _id: -1 }) // Sort in ascending order based on _id
   .limit(30); // Limit the result to 30 records
-      res.send(message_read);
+      res.send(message_read.reverse());
 });
 
 router.get("/allconversations", async (req,res) =>{

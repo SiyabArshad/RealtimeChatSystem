@@ -119,21 +119,22 @@ export default function Inbox({navigation,route}) {
           } 
       }  
     React.useEffect(()=>{
-      socket.connect()
-      socket.on('messageevent',(payload)=>{
-      setMessages(prev=>[...prev,payload])
-      scrollToBottom()
-    })
-    socket.on('broadcastmessageevent',(payload)=>{
-      setMessages(prev=>[...prev,payload])
-      scrollToBottom()
-    })
       socket.emit("joinChatRoom",{roomid:`chat_${chatinfo?.contactid}`})
         socket.emit("joinBroadCastRoom", { roomid: `broadcast_${clientID}` });
         getallcons() 
         scrollToBottom()
         },[focus,navigation,route,scrollViewRef.current])
-    
+  React.useEffect(()=>{
+    socket.connect()
+    socket.on('messageevent',(payload)=>{
+    setMessages(prev=>[...prev,payload])
+    scrollToBottom()
+  })
+  socket.on('broadcastmessageevent',(payload)=>{
+    setMessages(prev=>[...prev,payload])
+    scrollToBottom()
+  })
+  },[])  
   return (
     <Screen>
     <Loading visible={loading}/>
@@ -162,8 +163,6 @@ export default function Inbox({navigation,route}) {
             }
         </ScrollView>
     </View>
-  
-    {/* <ChatBox scrollViewRef={scrollViewRef} messages={messages}/> */}
     <View style={{width:"100%",display:"flex",flexDirection:"row",paddingVertical:rp(1.5),paddingHorizontal:rp(1),alignItems:"center"}}>
         <TextInput value={typemessage} onChangeText={(e)=>settypemessage(e)} style={{width:"70%",paddingHorizontal:rp(2),paddingVertical:rp(2)}} placeholder='Your Message'/>
         <View style={{width:"30%",display:"flex",flexDirection:"row",alignItems:"center"}}>
