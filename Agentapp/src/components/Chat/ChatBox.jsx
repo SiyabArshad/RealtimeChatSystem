@@ -3,18 +3,15 @@ import React from 'react'
 import { RFPercentage as rp, RFValue as rf } from "react-native-responsive-fontsize";
 import OutGoinMessage from './OutGoinMessage'
 import IncommingMessage from './IncommingMessage'
-export default function ChatBox() {
+export default function ChatBox({messages}) {
   return (
     <View style={{flex:1,paddingVertical:rp(2)}}>
         <ScrollView showsVerticalScrollIndicator={false}>
-            <OutGoinMessage/>
-            <OutGoinMessage/>
-            <IncommingMessage/>
-            <OutGoinMessage/>
-            <OutGoinMessage/>
-            <OutGoinMessage/>
-            <IncommingMessage/>
-            <OutGoinMessage/>
+        {
+                messages&&messages.map((item,i)=>(
+                    item?.msgType==='outbound'?<OutGoinMessage message={item}/>:<IncommingMessage message={item}/>
+                ))
+            }
         </ScrollView>
     </View>
   )

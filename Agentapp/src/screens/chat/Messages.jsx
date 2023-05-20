@@ -50,9 +50,8 @@ export default function Messages({navigation,route}) {
       }
     
 React.useEffect(()=>{
-    getallcons()
-
-},[])
+        getallcons()
+},[focus,route,navigation])
 
   return (
     <Screen>
@@ -79,8 +78,8 @@ React.useEffect(()=>{
             tab===0&&
             <View>
             {
-            lastconvs&&lastconvs.map((item,i)=>(
-                <ConversationCard item={item} func={()=>navigation.navigate(ScreenName.inbox)} key={i}/>
+            contacts&&contacts.map((item,i)=>(
+                <ConversationCard lastconvs={lastconvs} item={item} func={()=>navigation.navigate(ScreenName.inbox,{chatinfo:{contactid:item?._id}})} key={i}/>
             ))
             }
             </View>
@@ -90,7 +89,7 @@ React.useEffect(()=>{
             <View>
             {
             contacts&&contacts.map((item,i)=>(
-                <ContactCard item={item} func={()=>navigation.navigate(ScreenName.inbox)} key={i}/>
+                <ContactCard func={()=>navigation.navigate(ScreenName.inbox,{chatinfo:{contactid:item?._id}})} item={item}  key={i}/>
             ))
             }
             </View>

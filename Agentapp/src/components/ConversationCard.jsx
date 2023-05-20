@@ -1,4 +1,4 @@
-import { View, Text,Modal,TouchableOpacity,Pressable,Image,StyleSheet,ImageBackground,ScrollView, Dimensions ,TextInput} from 'react-native'
+import { View, Text,Modal,TouchableOpacity,Pressable,Image,StyleSheet,ImageBackground,ScrollView, Dimensions ,TextInput, ActivityIndicator} from 'react-native'
 import React from 'react'
 import colors from "../helpers/colors"
 import fonts from "../helpers/fonts"
@@ -16,31 +16,24 @@ import { LinearProgress,Avatar } from 'react-native-elements'
 import formatDate from '../helpers/formatdate'
 import axios from "axios"
 import origin from '../helpers/api'
-export default function ConversationCard({func,item}) {
-  const [contactonfo,setcontactinfo]=React.useState()
-  const {contactid}=item 
-  const getallcons=async()=>{
-          const {data}=await axios.get(`${origin}/api/chat/contact/${contactid}`)
-          setcontactinfo(data)
-      }
-    React.useEffect(()=>{
-        getallcons()
-      },[])  
+import { useIsFocused } from '@react-navigation/native';
+
+export default function ConversationCard({func,item,lastconvs}) {
+  const lastmessage=lastconvs?.filter((item2,i)=>item2?.contactid===item._id)
   return (
-    <Pressable onPress={func} style={{width:"95%",marginHorizontal:"2.5%",display:"flex",flexDirection:"row",justifyContent:"space-between",alignItems:"center",marginBottom:rp(2),backgroundColor:colors.lightgrey,paddingHorizontal:rp(1.5),paddingVertical:rp(2),borderRadius:rp(2.5)}}>
+  <Pressable onPress={func} style={{width:"95%",marginHorizontal:"2.5%",display:"flex",flexDirection:"row",justifyContent:"space-between",alignItems:"center",marginBottom:rp(2),backgroundColor:colors.lightgrey,paddingHorizontal:rp(1.5),paddingVertical:rp(2),borderRadius:rp(2.5)}}>
                             <View style={{display:"flex",flexDirection:"row",alignItems:"center"}}>
                          <View style={{height:40,width:40,borderRadius:20,display:"flex",justifyContent:"center",alignItems:"center",backgroundColor:colors.grey}}>
-                          <CaptionText text=    {
-               contactonfo?.first_name!==null&&contactonfo?.first_name[0].toUpperCase()
-            }/>
+                         <CaptionText text={item?.first_name!==null?item?.first_name[0].toUpperCase():"G"}/>
+                        
                          </View>
                             {/* <Avatar rounded size="medium" source={require("../../assets/images/user.png")}/> */}
                             <View style={{marginLeft:rp(2)}}>
-                                <SubTitleText text={contactonfo?.first_name} color={colors.lightblack} size='m'/>
-                                <LabelText style={{marginTop:rp(1),fontSize:rp(1.8)}} color={colors.lightblack} text={`${item?.text.slice(0,15)}....`}/>
+                            <SubTitleText text={item?.first_name!==''&&item?.first_name!==null?item?.first_name:"Guest"} color={colors.lightblack} size='m'/>
+                                <LabelText style={{marginTop:rp(1),fontSize:rp(1.8)}} color={colors.lightblack} text={`${lastmessage[0]?.text.slice(0,15)}....`}/>
                              </View>
                             </View>
-                            <CaptionText text={formatDate(item?.time)}/>
+                            <CaptionText text={formatDate(lastmessage[0]?.time)}/>
     </Pressable>
   )
 }
