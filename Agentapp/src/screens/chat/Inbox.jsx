@@ -20,7 +20,7 @@ import { useSelector,useDispatch } from 'react-redux';
 import { GetBroadCast } from '../../redux/broadcast/action'
 import { useIsFocused } from '@react-navigation/native';
 import io from 'socket.io-client';
-const socket=io(origin);
+// const socket=io(origin);
 export default function Inbox({navigation,route}) {
   const focus=useIsFocused()
   const scrollViewRef = React.useRef(null);
@@ -119,22 +119,35 @@ export default function Inbox({navigation,route}) {
           } 
       }  
     React.useEffect(()=>{
+      const socket = io(origin);
+      socket.connect();
+      socket.on('messageevent',(payload)=>{
+      setMessages(prev=>[...prev,payload])
+      scrollToBottom()
+    })
+    socket.on('broadcastmessageevent',(payload)=>{
+      setMessages(prev=>[...prev,payload])
+      scrollToBottom()
+    })
       socket.emit("joinChatRoom",{roomid:`chat_${chatinfo?.contactid}`})
         socket.emit("joinBroadCastRoom", { roomid: `broadcast_${clientID}` });
         getallcons() 
         scrollToBottom()
+        return () => {
+          socket.disconnect();
+        };
         },[focus,navigation,route,scrollViewRef.current])
-  React.useEffect(()=>{
-    socket.connect()
-    socket.on('messageevent',(payload)=>{
-    setMessages(prev=>[...prev,payload])
-    scrollToBottom()
-  })
-  socket.on('broadcastmessageevent',(payload)=>{
-    setMessages(prev=>[...prev,payload])
-    scrollToBottom()
-  })
-  },[])  
+  // React.useEffect(()=>{
+  //   socket.connect()
+  //   socket.on('messageevent',(payload)=>{
+  //   setMessages(prev=>[...prev,payload])
+  //   scrollToBottom()
+  // })
+  // socket.on('broadcastmessageevent',(payload)=>{
+  //   setMessages(prev=>[...prev,payload])
+  //   scrollToBottom()
+  // })
+  // },[])  
   return (
     <Screen>
     <Loading visible={loading}/>

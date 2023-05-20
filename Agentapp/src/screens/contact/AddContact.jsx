@@ -42,7 +42,7 @@ export default function AddContact({navigation}) {
           }
           else if(email.length>10&&phone.length>8)
           {
-              const {data}=await axios.post(`${origin}/api/chat/contact`,{firstname:fistname,lastname,email,phone,user:_id},{
+              const {data}=await axios.post(`${origin}/api/chat/contact`,{first_name:fistname,last_name:lastname,email,phone,user:_id},{
                 headers:{
                   'Content-Type': 'application/json',
                   'x-auth-token':token,
