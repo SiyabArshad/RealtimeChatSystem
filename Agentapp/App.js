@@ -11,8 +11,11 @@ import OnBoarding from "./src/screens/OnBoardingScreens/OnBoarding"
 import SignupScreen from './src/screens/authScreens/Signup';
 import SigninScreen from './src/screens/authScreens/SignIn';
 import Inbox from './src/screens/chat/Inbox';
+import Messages from './src/screens/chat/Messages';
+import AddContact from './src/screens/contact/AddContact';
 import ScreenNames from './src/helpers/routes';
 import Drawer from './src/helpers/Drawer';
+import Setting from './src/screens/setting/Setting';
 const Stack=createNativeStackNavigator()
 //redux imports
 //redux imports and others
@@ -20,6 +23,8 @@ import { Provider } from 'react-redux';
 import store from './src/redux/store';
 import { useSelector,useDispatch } from 'react-redux';
 import {getCurrentuser } from './src/redux/auth/action';
+import { FAB, Portal, PaperProvider } from 'react-native-paper';
+
 
 export default function App() {
   LogBox.ignoreAllLogs()
@@ -75,10 +80,14 @@ const Routes=()=>{
       </>
       :
      <>
-      <Stack.Screen name={ScreenNames.contactsscreen} component={Drawer}/>
+      <Stack.Screen name={ScreenNames.contactsscreen} component={Messages}/>
       <Stack.Screen name={ScreenNames.inbox} component={Inbox}/>
+      <Stack.Screen name={ScreenNames.addcontact} component={AddContact}/>
+      <Stack.Screen name={ScreenNames.setting} component={Setting}/>
       </>
      }
+
+        
       </Stack.Navigator>
   )
 }

@@ -29,7 +29,7 @@ export default function ConversationCard({func,item,lastconvs,index}) {
                          </View>
                             <View style={{marginLeft:rp(2),flex:1}}> 
                               <View style={{flex:1,display:"flex",flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
-                              <SubTitleText text={item?.first_name!==''&&item?.first_name!==null?item?.first_name:"Guest"} size='m' style={{fontWeight:"bold"}}/>
+                              <SubTitleText text={item?.first_name!==''&&item?.first_name!==null?item?.first_name:"Guest"} size='m' style={{fontFamily:fonts.mregular,fontWeight:"bold"}}/>
                             <CaptionText text={lastmessage[0]?.time&&moment(lastmessage[0]?.time).calendar()}/>
                               </View>
                               <LabelText style={{fontSize:rp(1.8)}} color={colors.lightblack} text={lastmessage[0]?`${lastmessage[0].text.slice(0,15)}....`:"Start Conversation"}/>

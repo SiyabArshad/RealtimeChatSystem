@@ -4,7 +4,8 @@ const ScreenNames={
     signupScreen:"SignupScreen",
     contactsscreen:"contactsScreen",
     inbox:"inboxScreen",
-    addcontact:"addcontact"
+    addcontact:"addcontact",
+    setting:"setting"
 }
 
 export default ScreenNames

@@ -77,10 +77,11 @@ export default function AddContact({navigation}) {
       <MessageCard  show={issubmit} callshow={callbacksubmit}  message={Error} type={type}/>
     <View style={{flex:1}}>
     <View style={{display:"flex",flexDirection:"row",justifyContent:"space-between",alignItems:"center",marginVertical:rp(3),paddingHorizontal:rp(2)}}>
-    <Pressable onPress={()=>navigation.openDrawer()} style={{display:"flex",alignItems:"center",justifyContent:"center"}}>
-    <Feather name="menu" size={24} color={colors.skyBlue} />
+    <Pressable onPress={()=>navigation.pop()} style={{display:"flex",alignItems:"center",justifyContent:"center"}}>
+    <Entypo name="chevron-left" size={30} color={colors.skyBlue}/>
     </Pressable>
-
+    <CaptionText color={colors.lightblack} text="Add Contacts"/>
+   
     </View>
     
     <ScrollView showsVerticalScrollIndicator={false}>
