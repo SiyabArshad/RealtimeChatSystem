@@ -12,7 +12,7 @@ export default function IncommingMessage({message}) {
                 <CaptionText style={{fontSize:rp(2.3)}} text={message?.text} color={colors.black}/>
             </View>
             <View style={{marginTop:rp(1),display:"flex",flexDirection:"row",justifyContent:"flex-start",marginLeft:rp(2)}}>
-            <CaptionText color={colors.lightblack} text={formatDate(message?.time)}/>
+            <CaptionText color={colors.lightblack} text={moment(message?.time).calendar()}/>
             </View>
             </View>
         </View>

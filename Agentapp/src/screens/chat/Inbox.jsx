@@ -137,17 +137,7 @@ export default function Inbox({navigation,route}) {
           socket.disconnect();
         };
         },[focus,navigation,route,scrollViewRef.current])
-  // React.useEffect(()=>{
-  //   socket.connect()
-  //   socket.on('messageevent',(payload)=>{
-  //   setMessages(prev=>[...prev,payload])
-  //   scrollToBottom()
-  // })
-  // socket.on('broadcastmessageevent',(payload)=>{
-  //   setMessages(prev=>[...prev,payload])
-  //   scrollToBottom()
-  // })
-  // },[])  
+ 
   return (
     <Screen>
     <Loading visible={loading}/>
@@ -173,7 +163,7 @@ export default function Inbox({navigation,route}) {
                 messages&&messages.map((item,i)=>(
                     item?.msgType==='outbound'?<OutGoinMessage key={i} message={item}/>:<IncommingMessage key={i} message={item}/>
                 ))
-            }
+          }
         </ScrollView>
     </View>
     <View style={{width:"100%",display:"flex",flexDirection:"row",paddingVertical:rp(1.5),paddingHorizontal:rp(1),alignItems:"center"}}>

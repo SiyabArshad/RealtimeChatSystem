@@ -4,6 +4,8 @@ import colors from '../../helpers/colors'
 import { RFPercentage as rp, RFValue as rf } from "react-native-responsive-fontsize";
 import CaptionText from '../Typography/CaptionText'
 import formatDate from '../../helpers/formatdate';
+import moment from 'moment';
+
 export default function OutGoinMessage({message}) {
   return (
     <View style={{display:"flex",flexDirection:"row",alignItems:"center",justifyContent:"flex-end",marginBottom:rp(2)}}>
@@ -12,7 +14,7 @@ export default function OutGoinMessage({message}) {
                 <CaptionText style={{fontSize:rp(2.3)}} text={message?.text} color={colors.navyblue}/>
             </View>
             <View style={{marginTop:rp(1),display:"flex",flexDirection:"row",justifyContent:"flex-end",marginRight:rp(2)}}>
-            <CaptionText color={colors.lightblack} text={formatDate(message?.time)}/>
+            <CaptionText color={colors.lightblack} text={moment(message?.time).calendar()}/>
             </View>
             </View>
         </View>

@@ -87,7 +87,7 @@ React.useEffect(()=>{
             <View>
             {
             contacts&&contacts.map((item,i)=>(
-                <ConversationCard lastconvs={lastconvs} item={item} func={()=>navigation.navigate(ScreenName.inbox,{chatinfo:{contactid:item?._id}})} key={i}/>
+                <ConversationCard index={i}  lastconvs={lastconvs} item={item} func={()=>navigation.navigate(ScreenName.inbox,{chatinfo:{contactid:item?._id}})} key={i}/>
             ))
             }
             </View>
@@ -97,7 +97,7 @@ React.useEffect(()=>{
             <View>
             {
             contacts&&contacts.map((item,i)=>(
-                <ContactCard func={()=>navigation.navigate(ScreenName.inbox,{chatinfo:{contactid:item?._id}})} item={item}  key={i}/>
+                <ContactCard index={i} func={()=>navigation.navigate(ScreenName.inbox,{chatinfo:{contactid:item?._id}})} item={item}  key={i}/>
             ))
             }
             </View>
