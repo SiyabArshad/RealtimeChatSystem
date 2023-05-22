@@ -69,11 +69,14 @@ export default function Setting({navigation,route}) {
            </View>
              <View style={{display:"flex",flexDirection:"row",alignItems:"center",justifyContent:"space-between",marginVertical:RFPercentage(2)}}>
                <CaptionText text={"BroadCast"}/>
-               <Switch color={colors.purple} value={binfo?.broadcast} onChange={()=>{
+               <Switch color={colors.navyblue} value={binfo?.broadcast} onChange={()=>{
                  setchecked(!checked)
                  dispatch(UpdateBroadCast({clientid:clientID,token,broadcast:binfo?.broadcast}))
                }}/>
            </View>
+           <TouchableOpacity onPress={()=>dispatch(logoutaction())} style={{display:"flex",justifyContent:"center",alignItems:"center",backgroundColor:colors.purple,paddingVertical:RFPercentage(1),borderRadius:RFPercentage(.5)}}>
+            <SubTitleText size='s' text={"Log out"} color={colors.white}/>
+           </TouchableOpacity>
            </View>
     </View>
     </Screen>

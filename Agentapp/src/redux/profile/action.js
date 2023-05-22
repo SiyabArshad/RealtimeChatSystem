@@ -9,6 +9,7 @@ export const GetProfile=(payload)=>{
             headers: {
                 'Content-Type': 'application/json',
                 'x-auth-token': payload?.token,
+                'clientid':payload?.clientid
               }
         })
         dispatch({
