@@ -4,6 +4,8 @@ import colors from '../../helpers/colors'
 import { RFPercentage as rp, RFValue as rf } from "react-native-responsive-fontsize";
 import CaptionText from '../Typography/CaptionText'
 import formatDate from '../../helpers/formatdate';
+import moment from 'moment';
+
 export default function IncommingMessage({message}) {
   return (
     <View style={{display:"flex",flexDirection:"row",alignItems:"center",justifyContent:"flex-start",marginBottom:rp(2)}}>

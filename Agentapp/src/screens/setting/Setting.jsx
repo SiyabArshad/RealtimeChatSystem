@@ -69,7 +69,7 @@ export default function Setting({navigation,route}) {
            </View>
              <View style={{display:"flex",flexDirection:"row",alignItems:"center",justifyContent:"space-between",marginVertical:RFPercentage(2)}}>
                <CaptionText text={"BroadCast"}/>
-               <Switch color={colors.navyblue} value={binfo?.broadcast} onChange={()=>{
+               <Switch color={colors.purple} value={binfo?.broadcast} onChange={()=>{
                  setchecked(!checked)
                  dispatch(UpdateBroadCast({clientid:clientID,token,broadcast:binfo?.broadcast}))
                }}/>
